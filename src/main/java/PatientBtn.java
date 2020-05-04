@@ -19,23 +19,26 @@ public class PatientBtn extends Button{
     JSONObject obj = new JSONObject();
 
 
-
     public PatientBtn(String value)
     {
         super(value);
     }
 
 
-    public void writeUserDataPatient(TextField userTF, TextField passwordTF) {
+    public void writeUserDataPatient(TextField userTF, TextField passwordTF)  {
 
         String Val = this.getText();
         this.setOnAction(e -> {
             JSONObject userJson = new JSONObject();
 
             PatientPromptedWindow.window();// apeleaza getPatientData(adresa, stage -> ce trebuie inchis)
-
+            AdminService parola = new AdminService();
             userJson.put("username:", userTF.getText());
-            userJson.put("password:", passwordTF.getText());
+            try {
+                userJson.put("password:", AdminService.encrypt(passwordTF.getText()));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             userJson.put("role:", Val);
             userJson.put("adresa:", adress);
 

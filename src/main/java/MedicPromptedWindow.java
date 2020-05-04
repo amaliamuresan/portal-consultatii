@@ -60,7 +60,7 @@ public class MedicPromptedWindow
 
 
 
-            publicCB.setOnAction(e->
+            publicCB.setOnAction(e ->
             {
                 doctorData = new ArrayList<>();
 
