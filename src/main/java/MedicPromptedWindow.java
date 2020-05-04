@@ -71,17 +71,20 @@ public class MedicPromptedWindow
                 if(publicCB.isSelected()) {
                     if(c == 0) {
 
+
                         layout.getChildren().addAll(AdresaLabel, AdresaSpitalTF, btn);
 
-                        doctorData.add("public");//0
-                        doctorData.add(specialtyTF.getText());//1
-                        doctorData.add(codParafaTF.getText());//2
-                        //System.out.println(doctorData);
-                        doctorData.add(AdresaSpitalTF.getText());//3
-                        System.out.println(doctorData);
+                        btn.setOnAction(v -> {
+                            doctorData.add("public");//0
+                            doctorData.add(specialtyTF.getText());//1
+                            doctorData.add(codParafaTF.getText());//2
+                            //System.out.println(doctorData);
+                            doctorData.add(AdresaSpitalTF.getText());//3
+                            window.close();
 
-                        //btn.getDoctorData(doctorData, window);
-                        btn.setOnAction(r -> {window.close();});
+                        });
+
+                        //System.out.println(doctorData);
 
 
                         c = 1;
@@ -116,15 +119,19 @@ public class MedicPromptedWindow
                     if(c == 0)
                     {
                         layout.getChildren().addAll(AdresaClinicaLabel, AdresaClinicaTF, tarifeLabel, consulatatieTF, interpretareTF, btn);
+                        btn.setOnAction( r -> {
+                            doctorData.add("privat");//0
+                            doctorData.add(specialtyTF.getText());//1
+                            doctorData.add(codParafaTF.getText());//2
+                            doctorData.add(AdresaClinicaTF.getText());//3
+                            doctorData.add(consulatatieTF.getText());//4
+                            doctorData.add(interpretareTF.getText());//5
 
-                        doctorData.add("privat");//0
-                        doctorData.add(specialtyTF.getText());//1
-                        doctorData.add(codParafaTF.getText());//2
-                        doctorData.add(AdresaClinicaTF.getText());//3
-                        doctorData.add(consulatatieTF.getText());//4
-                        doctorData.add(interpretareTF.getText());//5
 
-                        btn.setOnAction(r -> {window.close();});
+                            window.close();
+                            //System.out.println(doctorData);
+
+                        });
 
 
                         c = 1;
