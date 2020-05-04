@@ -1,12 +1,12 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main extends Application{
 
     Button login, signup;
 
@@ -21,10 +21,13 @@ public class Main extends Application {
         primaryStage.setTitle("Portal consultatii");
         login=new Button("Log In");
         signup=new Button("Sign Up");
-        StackPane layout=new StackPane();
-        layout.getChildren().add(login);
-        layout.getChildren().add(signup);
-        Scene scene=new Scene(layout,300,250);
+        Label label=new Label("Daca aveti deja un cont dati click pe 'Log In', daca nu dati pe 'Sign Up' pentru a crea unul");
+
+        VBox layout=new VBox(20);
+        layout.getChildren().addAll(label,login,signup);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene=new Scene(layout,650,250);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
