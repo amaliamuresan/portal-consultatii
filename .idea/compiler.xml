@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="fiisProjv3" />
+        <module name="portal-consultatii-master 2" />
       </profile>
     </annotationProcessing>
   </component>
