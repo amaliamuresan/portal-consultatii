@@ -1,27 +1,37 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Parafa {
 
-    public static ArrayList<String> coduriValide = new ArrayList<>();
+    public static List<Parafa> listaCoduri;
 
-    public static void AdaugaCoduri()
-    {
-        coduriValide.add("11234");
-        coduriValide.add("12345");
-        coduriValide.add("15671");
-        coduriValide.add("14321");
-        coduriValide.add("83203");
-        coduriValide.add("84638");
-        coduriValide.add("92732");
-        coduriValide.add("valid");
+    private String cod;
+    private String avaible;
+
+    public String getCod() {
+        return cod;
     }
-    public static int VerificareCod(String cod)
-    {
-        Parafa.AdaugaCoduri();
-        if(coduriValide.contains(cod))
-        {
-            return 1;
-        }
-        return 0;
+
+    public void setCod(String cod) {
+        this.cod = cod;
+    }
+
+    public String getAvaible() {
+        return avaible;
+    }
+
+    public void setAvaible(String avaible) {
+        this.avaible = avaible;
+    }
+
+    public static void setCoduri() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File("parafe.json");
+        Parafa.listaCoduri = objectMapper.readValue(file, new TypeReference<List<Parafa>>() {});
     }
 }

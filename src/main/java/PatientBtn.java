@@ -1,6 +1,10 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -10,13 +14,17 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import org.json.*;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PatientBtn extends Button{
 
     static String adress;
-    JSONObject obj = new JSONObject();
+    //List<JsonUser> obj;
 
 
     public PatientBtn(String value)
@@ -25,37 +33,65 @@ public class PatientBtn extends Button{
     }
 
 
-    public void writeUserDataPatient(TextField userTF, TextField passwordTF)  {
-
+    public void writeUserDataPatient(TextField userTF, TextField passwordTF) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File("users.json");
+        SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});
         String Val = this.getText();
         this.setOnAction(e -> {
-            JSONObject userJson = new JSONObject();
+            //JSONObject userJson = new JSONObject();
+            JsonUser userJson = new JsonUser();
+
+
 
             PatientPromptedWindow.window();// apeleaza getPatientData(adresa, stage -> ce trebuie inchis)
-            AdminService parola = new AdminService();
-            userJson.put("username:", userTF.getText());
-            try {
-                userJson.put("password:", AdminService.encrypt(passwordTF.getText()));
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            //AdminService parola = new AdminService();
+            //userJson.put("username", userTF.getText());
+            if(userTF.getText() == null|| userTF.getText().length() == 0 || passwordTF.getText() == null || adress == null||passwordTF.getText().length() ==  0 )
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setContentText("Completati toate campurile!");
+                alert.show();
+
             }
-            userJson.put("role:", Val);
-            userJson.put("adresa:", adress);
+            else {
 
-            obj.put(userTF.getText(), userJson);
+                if (AdminService.userAlraedyExists(userTF.getText()) == true) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Dialog");
+                    alert.setContentText("Acest username deja exista!");
+                    alert.show();
+                    //AdminService.userAlraedyExists(userTF.getText());
 
-            System.out.println(obj.toString(4));
+                } else {
 
-           try (FileWriter file = new FileWriter("users.json")) {
+                    userJson.setUsername(userTF.getText());
 
-                file.write(userJson.toString(4));
-                file.flush();
 
-            } catch (IOException err) {
-                err.printStackTrace();
+                    try {
+                        userJson.setPassword(AdminService.encrypt(passwordTF.getText()));
+                    } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+                        noSuchAlgorithmException.printStackTrace();
+                    }
+
+                    userJson.setRole(Val);
+                    //userJson.put("adresa:", adress);
+
+                    SignUp.obj.add(userJson);
+
+                    //System.out.println(obj.toString());
+
+                    try {
+                        objectMapper.writeValue(new File("users.json"), SignUp.obj);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                }
             }
-        });
+            });
     }
+
 
     public void  getPatientData(TextField adresaTF, Stage window)
     {

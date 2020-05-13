@@ -145,7 +145,7 @@ public class MedicPromptedWindow
 
 
 
-            Scene scene = new Scene(layout, 350, 250);
+            Scene scene = new Scene(layout, 350, 450);
             window.setScene(scene);
             window.showAndWait();
 

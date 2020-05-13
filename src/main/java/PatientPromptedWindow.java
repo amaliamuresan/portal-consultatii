@@ -17,6 +17,7 @@ public class PatientPromptedWindow {
     public static String adress;
 
 
+
     public static String window()
     {
         Stage window = new Stage();

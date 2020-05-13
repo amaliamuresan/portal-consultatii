@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,19 +15,24 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.geometry.Insets;
 
+import java.io.IOException;
+import java.util.List;
 
 
 public class SignUp extends Application {
+
+    public static List<JsonUser> obj;
 
     public static void main(String[] args) {
         launch(args);
     }
 
     Stage window;
+    LoadUsers l = new LoadUsers();
 
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
 
 
         window = primaryStage;
@@ -62,6 +68,10 @@ public class SignUp extends Application {
 
         rolesHBox.getChildren().addAll(medicBtn, pacientBtn);
 
+        //AdminService.writeDataInJsonFile();
+        Parafa.setCoduri();
+
+
         pacientBtn.writeUserDataPatient(usernameTF, passwordTF);
         medicBtn.writeUserDataMedic(usernameTF, passwordTF);
 
@@ -69,6 +79,7 @@ public class SignUp extends Application {
 
         Scene sceneSignUp = new Scene(gridLayout, 350, 250);
         window.setScene(sceneSignUp);
+
         window.show();
 
 
