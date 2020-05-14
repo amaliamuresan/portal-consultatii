@@ -19,23 +19,23 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class SignUp extends Application {
+public class SignUp {
 
     public static List<JsonUser> obj;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    //public static void main(String[] args) {
+       // launch(args);
+   // }
 
-    Stage window;
+    public static Stage window;
     LoadUsers l = new LoadUsers();
 
 
-    @Override
-    public void start(Stage primaryStage) throws IOException {
+    //@Override
+    public static void initSignUp() throws IOException {
 
 
-        window = primaryStage;
+        //window = primaryStage;
         window.setTitle("Sign Up");
         PatientBtn pacientBtn = new PatientBtn("Pacient");
         MedicBtn medicBtn = new MedicBtn("Medic");
@@ -84,5 +84,10 @@ public class SignUp extends Application {
 
 
 
+    }
+
+    public static void setStage(Stage stage)
+    {
+        window = stage;
     }
 }
