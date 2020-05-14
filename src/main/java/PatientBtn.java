@@ -83,6 +83,12 @@ public class PatientBtn extends Button{
                     //System.out.println(obj.toString());
 
                     try {
+                        JSONObject JsnObj = new JSONObject();
+                        JsnObj.put("adresa", adress);
+                        FileWriter fil  = new FileWriter("Users/" + userTF.getText() + ".json");
+                        fil.write(JsnObj.toString());
+                        fil.flush();
+
                         objectMapper.writeValue(new File("users.json"), SignUp.obj);
                     } catch (IOException ioException) {
                         ioException.printStackTrace();

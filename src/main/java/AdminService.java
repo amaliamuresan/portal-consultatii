@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Alert;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,19 +77,32 @@ public class AdminService {
 
     }
 
-    public static boolean verificareParafa(String cod)
+    public static Parafa verificareParafa(String cod)
     {
         for(Parafa el : Parafa.listaCoduri)
         {
             if(cod.equals(el.getCod()))
             {
-                if(el.getAvaible().equals("1"))
-                    return true;
+                if(el.getAvailable().equals("1"))
+                    return el;
             }
 
         }
-        return false;
+        return null;
 
+    }
+
+    public static void changeAvaibility(String cod) throws IOException {
+        if(AdminService.verificareParafa(cod)!= null)
+        {
+            AdminService.verificareParafa(cod).setAvailable("0");
+            for(Parafa p : Parafa.listaCoduri)
+            {
+                System.out.println(p.toString());
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.writeValue(new File("parafe.json"), Parafa.listaCoduri);
+        }
     }
 
 
