@@ -65,50 +65,57 @@ public class MedicBtn extends Button {
                         alert.show();
 
                     } else {
-                        if (AdminService.verificareParafa(MedicPromptedWindow.doctorData.get(2)) == false) {
+                        if (AdminService.verificareParafa(MedicPromptedWindow.doctorData.get(2)) == null) {
                             //System.out.println(MedicPromptedWindow.doctorData.get(2));
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Error Dialog");
                             alert.setContentText("Cod Parafa invalid!");
                             alert.show();
 
-                        } else {
-            /*if(MedicPromptedWindow.doctorData.size() != 0 )
-            {
-                userJson.put("tip_serviciu:", MedicPromptedWindow.doctorData.get(0));
-                userJson.put("specialitate:", MedicPromptedWindow.doctorData.get(1));
-                userJson.put("cod parafa:", MedicPromptedWindow.doctorData.get(2));
-            }
-            if(MedicPromptedWindow.doctorData.size() == 4)
-            {
-                userJson.put("adresa Spital:", MedicPromptedWindow.doctorData.get(3));
-            }
+                        } else
+                            {
+                                JSONObject userJsn = new JSONObject();
+                                if(MedicPromptedWindow.doctorData.size() != 0 )
+                                {
+                                    userJsn.put("tip_serviciu:", MedicPromptedWindow.doctorData.get(0));
+                                    userJsn.put("specialitate:", MedicPromptedWindow.doctorData.get(1));
+                                    userJsn.put("cod parafa:", MedicPromptedWindow.doctorData.get(2));
+                                    try {
+                                        AdminService.changeAvaibility(MedicPromptedWindow.doctorData.get(2));
+                                    } catch (IOException ioException) {
+                                        ioException.printStackTrace();
+                                    }
+                                }
+                                if(MedicPromptedWindow.doctorData.size() == 4)
+                                {
+                                    userJsn.put("adresa Spital:", MedicPromptedWindow.doctorData.get(3));
+                                }
 
-            if(MedicPromptedWindow.doctorData.size()  == 6)
-            {
-                userJson.put("adresa Clinica:", MedicPromptedWindow.doctorData.get(3));
-                JSONObject priceJson = new JSONObject();
-                priceJson.put("pret Consult:", MedicPromptedWindow.doctorData.get(4));
-                priceJson.put("pret Interpretare:", MedicPromptedWindow.doctorData.get(5));
+                                if(MedicPromptedWindow.doctorData.size()  == 6)
+                                {
+                                    userJsn.put("adresa Clinica:", MedicPromptedWindow.doctorData.get(3));
+                                    JSONObject priceJson = new JSONObject();
+                                    priceJson.put("pret Consult:", MedicPromptedWindow.doctorData.get(4));
+                                    priceJson.put("pret Interpretare:", MedicPromptedWindow.doctorData.get(5));
 
-                userJson.put("preturi:", priceJson );
+                                    userJsn.put("preturi:", priceJson );
 
-            }*/
+                                }
 
-                            SignUp.obj.add(userJson);
+                                                SignUp.obj.add(userJson);
 
-                            //System.out.println("--------Date:----------");
-                            //System.out.println(obj.toString());
+                                                //System.out.println("--------Date:----------");
+                                                //System.out.println(obj.toString());
 
-                            try {
-                                objectMapper.writeValue(new File("users.json"), SignUp.obj);
+                                                try {
+                                                    objectMapper.writeValue(new File("users.json"), SignUp.obj);
+                                                    FileWriter fil  = new FileWriter("Users/" + userTF.getText() + ".json");
+                                                    fil.write(userJsn.toString());
+                                                    fil.flush();
 
-                                //file.write(obj.toString());
-                                //file.flush();
-
-                            } catch (IOException err) {
-                                err.printStackTrace();
-                            }
+                                                } catch (IOException err) {
+                                                    err.printStackTrace();
+                                                }
                         }
                     }
             }
@@ -133,9 +140,6 @@ public class MedicBtn extends Button {
 
     }
 
-    public static void verifica()
-    {
 
-    }
 
 }

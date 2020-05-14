@@ -11,7 +11,7 @@ public class Parafa {
     public static List<Parafa> listaCoduri;
 
     private String cod;
-    private String avaible;
+    private String available;
 
     public String getCod() {
         return cod;
@@ -21,12 +21,12 @@ public class Parafa {
         this.cod = cod;
     }
 
-    public String getAvaible() {
-        return avaible;
+    public String getAvailable() {
+        return available;
     }
 
-    public void setAvaible(String avaible) {
-        this.avaible = avaible;
+    public void setAvailable(String avaible) {
+        this.available = avaible;
     }
 
     public static void setCoduri() throws IOException {
@@ -34,4 +34,11 @@ public class Parafa {
         File file = new File("parafe.json");
         Parafa.listaCoduri = objectMapper.readValue(file, new TypeReference<List<Parafa>>() {});
     }
+
+    public String toString()
+    {
+        return this.cod + " " + this.available;
+    }
+
+
 }
