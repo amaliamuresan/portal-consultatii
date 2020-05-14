@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application{
 
     Button login, signup;
@@ -23,6 +25,14 @@ public class Main extends Application{
         signup=new Button("Sign Up");
         Label label=new Label("Daca aveti deja un cont dati click pe 'Log In', daca nu dati pe 'Sign Up' pentru a crea unul");
 
+        signup.setOnAction(e->{
+            SignUp.setStage(primaryStage);
+            try {
+                SignUp.initSignUp();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
         VBox layout=new VBox(20);
         layout.getChildren().addAll(label,login,signup);
         layout.setAlignment(Pos.CENTER);
