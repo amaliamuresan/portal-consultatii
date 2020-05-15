@@ -25,6 +25,13 @@ public class Main extends Application{
         signup=new Button("Sign Up");
         Label label=new Label("Daca aveti deja un cont dati click pe 'Log In', daca nu dati pe 'Sign Up' pentru a crea unul");
 
+        login.setOnAction(e -> {
+            try{
+                LogIn.startLogIn(primaryStage);
+            }catch (Exception exception){
+                exception.printStackTrace();
+            }
+        });
         signup.setOnAction(e->{
             SignUp.setStage(primaryStage);
             try {
@@ -33,6 +40,7 @@ public class Main extends Application{
                 ioException.printStackTrace();
             }
         });
+
         VBox layout=new VBox(20);
         layout.getChildren().addAll(label,login,signup);
         layout.setAlignment(Pos.CENTER);
