@@ -1,6 +1,7 @@
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -100,17 +101,17 @@ public class AdminService {
     }
 
 
-    public static boolean verifyUser(String username, String password) throws NoSuchAlgorithmException {
+    public static boolean verifyUser(String username, String password) throws NoSuchAlgorithmException, IOException {
 
-        {
             for (JsonUser usr : SignUp.obj) {
 
                 if (usr != null) {
                     if (usr.getUsername().equals(username) && usr.getPassword().equals(AdminService.encrypt(password)))
                         return true;
+
                 }
             }
-        }
+
         return false;
 
     }

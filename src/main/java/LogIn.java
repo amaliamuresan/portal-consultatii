@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 
@@ -27,35 +28,12 @@ public class LogIn {
     public static void startLogIn(Stage window) throws Exception {
 
         window.setTitle("Log In Tab");
-        JsonUser userJson = new JsonUser();
 
         logIn=new Button("Log In");
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error Dialog");
         alert.setContentText("Username sau password gresit!");
-        logIn.setOnAction(e -> {
-            try {
-                if (!AdminService.verifyUser(userJson.getUsername(), userJson.getPassword()))
-                    alert.show();
-                else {
-                    try {
 
-
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-
-                }
-            }
-
-
-
-                                    catch (NoSuchAlgorithmException e1){
-                                            e1.printStackTrace();
-
-                                     }
-    }
-        );
 
         GridPane gridLayout=new GridPane();
         gridLayout.setPadding(new Insets(15, 15, 15, 15));
@@ -76,6 +54,7 @@ public class LogIn {
         gridLayout.setConstraints(passwordTF, 1, 2 );
         gridLayout.setConstraints(logIn,0,3);
 
+
         VBox layout=new VBox(20);
         gridLayout.getChildren().addAll(usernameLabel,passwordLabel,logIn,usernameTF,passwordTF);
         layout.setAlignment(Pos.CENTER);
@@ -84,6 +63,35 @@ public class LogIn {
 
         window.setScene(scene);
         window.show();
+
+        logIn.setOnAction(e -> {
+                    try {
+                        if (!AdminService.verifyUser(usernameTF.getText(), passwordTF.getText()))
+                            alert.show();
+                        else {
+                            try {
+
+
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                            }
+
+                        }
+                    }
+
+
+
+                    catch (NoSuchAlgorithmException e1){
+                        e1.printStackTrace();
+
+                    }
+                    catch (IOException e2){
+                        e2.printStackTrace();
+                    }
+
+                }
+        );
+
 
 
     }
