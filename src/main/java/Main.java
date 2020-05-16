@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class Main extends Application{
 
-    Button login, signup;
+    private Button login, signup;
 
     public static void main(String[] args) {
 
