@@ -1,4 +1,3 @@
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -7,23 +6,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class LogIn extends Application {
+public class LogIn{
 
 
-    Button logIn;
-    public static void main(String[] args) {
+    static Button logIn;
+    /*public static void main(String[] args) {
 
         launch(args);
-    }
+    }*/
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+    //@Override
+    public static void startLogIn(Stage window) throws Exception {
 
-        primaryStage.setTitle("Log In Tab");
+        window.setTitle("Log In Tab");
 
         logIn=new Button("Log In");
 
@@ -52,8 +50,8 @@ public class LogIn extends Application {
 
         Scene scene=new Scene(gridLayout,650,250);
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        window.setScene(scene);
+        window.show();
 
 
     }
