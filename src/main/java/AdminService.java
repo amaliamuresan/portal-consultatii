@@ -77,6 +77,7 @@ public class AdminService {
 
     }
 
+
     public static Parafa verificareParafa(String cod)
     {
         for(Parafa el : Parafa.listaCoduri)

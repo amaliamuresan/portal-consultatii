@@ -1,9 +1,5 @@
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,7 +20,7 @@ import java.util.List;
 public class PatientBtn extends Button{
 
     static String adress;
-    //List<JsonUser> obj;
+
 
 
     public PatientBtn(String value)
@@ -106,7 +102,7 @@ public class PatientBtn extends Button{
             //JSONObject userJson = new JSONObject();
             //JSON.put("adresa:", adresaTF.getText();
             adress = adresaTF.getText();
-            window.close();
+
 
         });
 

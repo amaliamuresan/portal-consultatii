@@ -1,3 +1,4 @@
+import Medic.MedicMainPage;
 import com.sun.org.apache.xerces.internal.xs.StringList;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -80,7 +81,7 @@ public class MedicPromptedWindow
                             doctorData.add(codParafaTF.getText());//2
                             //System.out.println(doctorData);
                             doctorData.add(AdresaSpitalTF.getText());//3
-                            window.close();
+                            MedicMainPage.start(window);
 
                         });
 
@@ -127,8 +128,8 @@ public class MedicPromptedWindow
                             doctorData.add(consulatatieTF.getText());//4
                             doctorData.add(interpretareTF.getText());//5
 
-
-                            window.close();
+                            MedicMainPage.start(window);
+                            //window.close();
                             //System.out.println(doctorData);
 
                         });

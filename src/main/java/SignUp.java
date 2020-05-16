@@ -28,7 +28,7 @@ public class SignUp {
    // }
 
     public static Stage window;
-    LoadUsers l = new LoadUsers();
+    //LoadUsers l = new LoadUsers();
 
 
     //@Override
