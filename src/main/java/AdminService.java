@@ -14,7 +14,6 @@ import java.util.List;
 public class AdminService {
 
 
-
     public static String encrypt(String passwordToEncrypt) throws NoSuchAlgorithmException {
 
 
@@ -22,11 +21,11 @@ public class AdminService {
         m.reset();
         m.update(passwordToEncrypt.getBytes());
         byte[] digest = m.digest();
-        BigInteger bigInt = new BigInteger(1,digest);
+        BigInteger bigInt = new BigInteger(1, digest);
         String hashtext = bigInt.toString(16);
         // Now we need to zero pad it if you actually want the full 32 chars.
-        while(hashtext.length() < 32 ){
-            hashtext = "0"+hashtext;
+        while (hashtext.length() < 32) {
+            hashtext = "0" + hashtext;
         }
         //System.out.println(hashtext);
 
@@ -67,23 +66,20 @@ public class AdminService {
         {
             for (JsonUser usr : SignUp.obj) {
 
-                    if (usr != null) {
-                        if (usr.getUsername().equals(username))
-                            return true;
-                    }
+                if (usr != null) {
+                    if (usr.getUsername().equals(username))
+                        return true;
+                }
             }
         }
-            return false;
+        return false;
 
     }
 
-    public static Parafa verificareParafa(String cod)
-    {
-        for(Parafa el : Parafa.listaCoduri)
-        {
-            if(cod.equals(el.getCod()))
-            {
-                if(el.getAvailable().equals("1"))
+    public static Parafa verificareParafa(String cod) {
+        for (Parafa el : Parafa.listaCoduri) {
+            if (cod.equals(el.getCod())) {
+                if (el.getAvailable().equals("1"))
                     return el;
             }
 
@@ -93,11 +89,9 @@ public class AdminService {
     }
 
     public static void changeAvaibility(String cod) throws IOException {
-        if(AdminService.verificareParafa(cod)!= null)
-        {
+        if (AdminService.verificareParafa(cod) != null) {
             AdminService.verificareParafa(cod).setAvailable("0");
-            for(Parafa p : Parafa.listaCoduri)
-            {
+            for (Parafa p : Parafa.listaCoduri) {
                 System.out.println(p.toString());
             }
             ObjectMapper objectMapper = new ObjectMapper();
@@ -106,10 +100,23 @@ public class AdminService {
     }
 
 
+    public static boolean verifyUser(String username, String password) throws NoSuchAlgorithmException {
 
+        {
+            for (JsonUser usr : SignUp.obj) {
 
+                if (usr != null) {
+                    if (usr.getUsername().equals(username) && usr.getPassword().equals(AdminService.encrypt(password)))
+                        return true;
+                }
+            }
+        }
+        return false;
 
+    }
 }
+
+
 
 
 
