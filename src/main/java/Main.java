@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -6,7 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class Main extends Application{
 
@@ -21,6 +26,9 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File("users.json");
+        SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});
 
         window = primaryStage;
         primaryStage.setTitle("Portal consultatii");

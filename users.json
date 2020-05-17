@@ -30,4 +30,8 @@
   "username" : "DAWDY",
   "password" : "b1b54ce7393c62b6765adae3f535329a",
   "role" : "Pacient"
+}, {
+  "username" : "test",
+  "password" : "098f6bcd4621d373cade4e832627b4f6",
+  "role" : "Medic"
 } ]

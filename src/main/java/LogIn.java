@@ -1,18 +1,25 @@
+import Medic.MedicMainPage;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class LogIn{
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
+
+public class LogIn {
 
     static Button logIn;
+    static Alert alert;
     /*public static void main(String[] args) {
 
         launch(args);
@@ -24,6 +31,12 @@ public class LogIn{
         window.setTitle("Log In Tab");
 
         logIn=new Button("Log In");
+        alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error Dialog");
+        alert.setContentText("Username sau password gresit!");
+
+
+
 
         GridPane gridLayout=new GridPane();
         gridLayout.setPadding(new Insets(15, 15, 15, 15));
@@ -35,14 +48,15 @@ public class LogIn{
         Label passwordLabel = new Label("Password");
         TextField usernameTF = new TextField();
         TextField passwordTF = new TextField();
-        usernameTF.setPromptText("Create an username");
-        passwordTF.setPromptText("Create a password");
+        usernameTF.setPromptText("Enter your username");
+        passwordTF.setPromptText("Enter your password");
 
         gridLayout.setConstraints(usernameLabel, 0, 1 );
         gridLayout.setConstraints(passwordLabel, 0, 2);
         gridLayout.setConstraints(usernameTF, 1 , 1);
         gridLayout.setConstraints(passwordTF, 1, 2 );
         gridLayout.setConstraints(logIn,0,3);
+
 
         VBox layout=new VBox(20);
         gridLayout.getChildren().addAll(usernameLabel,passwordLabel,logIn,usernameTF,passwordTF);
@@ -53,6 +67,42 @@ public class LogIn{
         window.setScene(scene);
         window.show();
 
+        logIn.setOnAction(e -> {
+                    try {
+                        if (!AdminService.verifyUser(usernameTF.getText(), passwordTF.getText()))
+                            alert.show();
+                        else {
+                            try {
+
+                                if(AdminService.returnRole(usernameTF.getText()).equals("Medic"))
+                                {
+                                    MedicMainPage.Init(window);
+                                }
+
+
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                            }
+
+                        }
+                    }
+
+
+
+                    catch (NoSuchAlgorithmException e1){
+                        e1.printStackTrace();
+
+                    }
+                    catch (IOException e2){
+                        e2.printStackTrace();
+                    }
+
+                }
+        );
+
+
 
     }
-}
+
+    }
+
