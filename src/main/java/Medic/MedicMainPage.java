@@ -11,13 +11,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import static javafx.application.Application.launch;
+
 public class MedicMainPage{
 
 
     public static Stage window;
 
+
     //@Override
-    public static void start(Stage window) {
+    public static void Init(Stage window) {
+
+
 
         Label requestLabel = new Label("Lista cereri:");
         Button myPatientsBtn = new Button("Pacienti internati");
@@ -61,9 +66,15 @@ public class MedicMainPage{
         Scene sceneMain = new Scene(gridLayout, 450, 300);
         window.setScene(sceneMain);
 
-        window.show();
+
+        //window.show();
 
 
+    }
+
+    public static void setStage(Stage stage)
+    {
+        window = stage;
     }
 
 

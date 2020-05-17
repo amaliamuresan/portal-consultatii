@@ -1,1 +1,33 @@
-[{"username":"sw","password":"43b36d42e7f8e60be58ba4356b6af40c","role":"Pacient"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Pacient"},{"username":"","password":"0cc175b9c0f1b6a831c399e269772661","role":"Pacient"},{"username":"a","password":"0cc175b9c0f1b6a831c399e269772661","role":"Pacient"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"d41d8cd98f00b204e9800998ecf8427e","role":"Medic"},{"username":"as","password":"d41d8cd98f00b204e9800998ecf8427e","role":"Medic"},{"username":"as","password":"d41d8cd98f00b204e9800998ecf8427e","role":"Medic"},{"username":"as","password":"d41d8cd98f00b204e9800998ecf8427e","role":"Medic"},{"username":"as","password":"d41d8cd98f00b204e9800998ecf8427e","role":"Medic"},{"username":"a","password":"0cc175b9c0f1b6a831c399e269772661","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"AS","password":"a2c29192484301fa800100e16e494acf","role":"Medic"},{"username":"as","password":"f970e2767d0cfe75876ea857f92e319b","role":"Medic"},{"username":"as","password":"c12e01f2a13ff5587e1e9e4aedb8242d","role":"Medic"},{"username":"asd","password":"7815696ecbf1c96e6894b779456d330e","role":"Medic"},{"username":"sasss","password":"457391c9c82bfdcbb4947278c0401e41","role":"Medic"},{"username":"Erji","password":"c265e5f001273a0b7a21e9e2b0bb202d","role":"Medic"},{"username":"asda","password":"97adf9fdd4c3e8423f37a208beb47a7a","role":"Medic"},{"username":"WDA","password":"78aefb2035204aa25780813d3a279754","role":"Medic"},{"username":"wad","password":"d1b46720b256ff6a478a806acc251047","role":"Medic"},{"username":"wad","password":"1f73402c644002a7ea3c9532e8ba4139","role":"Medic"},{"username":"dawd","password":"1f73402c644002a7ea3c9532e8ba4139","role":"Medic"},{"username":"WDA","password":"4ee058eb8b7ba41f11554d485e27c094","role":"Medic"},{"username":"elen","password":"7815696ecbf1c96e6894b779456d330e","role":"Pacient"},{"username":"wsa","password":"a8a64cef262a04de4872b68b63ab7cd8","role":"Pacient"},{"username":"Bibi","password":"bd7db7397f7d83052f829816ecc7f004","role":"Pacient"},{"username":"as","password":"c12e01f2a13ff5587e1e9e4aedb8242d","role":"Medic"},{"username":"SW","password":"a2c29192484301fa800100e16e494acf","role":"Pacient"},{"username":"swS","password":"43b36d42e7f8e60be58ba4356b6af40c","role":"Medic"},{"username":"dhsdb","password":"593be52a46f869eea8b31d146d21de7a","role":"Medic"},{"username":"wdada","password":"3c7a0e746ff7ee12b788a7ace02877a5","role":"Pacient"}]
+[ {
+  "username" : "sw",
+  "password" : "43b36d42e7f8e60be58ba4356b6af40c",
+  "role" : "Pacient"
+}, {
+  "username" : "as",
+  "password" : "f970e2767d0cfe75876ea857f92e319b",
+  "role" : "Pacient"
+}, {
+  "username" : "dwa",
+  "password" : "f495be79bad3d692686f63d43283c1f8",
+  "role" : "Pacient"
+}, {
+  "username" : "daw",
+  "password" : "523af537946b79c4f8369ed39ba78605",
+  "role" : "Pacient"
+}, {
+  "username" : "awddwwd",
+  "password" : "32832606886ee83d907a82e8e63b85a0",
+  "role" : "Medic"
+}, {
+  "username" : "dad",
+  "password" : "5ca2aa845c8cd5ace6b016841f100d82",
+  "role" : "Medic"
+}, {
+  "username" : "DADW",
+  "password" : "b1b54ce7393c62b6765adae3f535329a",
+  "role" : "Pacient"
+}, {
+  "username" : "DAWDY",
+  "password" : "b1b54ce7393c62b6765adae3f535329a",
+  "role" : "Pacient"
+} ]

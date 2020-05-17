@@ -12,6 +12,8 @@ public class Main extends Application{
 
     private Button login, signup;
 
+    public static Stage window;
+
     public static void main(String[] args) {
 
         launch(args);
@@ -20,6 +22,7 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
 
+        window = primaryStage;
         primaryStage.setTitle("Portal consultatii");
         login=new Button("Log In");
         signup=new Button("Sign Up");
@@ -47,6 +50,7 @@ public class Main extends Application{
 
         Scene scene=new Scene(layout,650,250);
         primaryStage.setScene(scene);
+        //System.out.println(SignUp.obj);
         primaryStage.show();
     }
 }

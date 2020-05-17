@@ -1,9 +1,12 @@
+import Medic.MedicMainPage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -16,6 +19,7 @@ import java.util.List;
 public class MedicBtn extends Button {
 
     ArrayList<String> DoctorData = new ArrayList<>();
+    static int ok = 0;
     //List<JsonUser> obj;
 
 
@@ -35,6 +39,7 @@ public class MedicBtn extends Button {
 
 
         this.setOnAction(e -> {
+            ok = 0;
             JsonUser userJson = new JsonUser();
 //(DoctorData.size() < 3 && DoctorData.get(0).equals("Public")) || (DoctorData.size() <6 && DoctorData.get(0).equals("Privat"))
             if(userTF.getText().length() == 0 || passwordTF.getText().length() == 0)
@@ -94,6 +99,7 @@ public class MedicBtn extends Button {
                             }
                             if (MedicPromptedWindow.doctorData.size() == 4) {
                                 userJsn.put("adresa Spital:", MedicPromptedWindow.doctorData.get(3));
+                                //MedicMainPage.Init(Main.window);
                             }
 
                             if (MedicPromptedWindow.doctorData.size() == 6) {
@@ -106,13 +112,22 @@ public class MedicBtn extends Button {
 
                             }
 
+                            ok = 1;
+
+                            //MedicMainPage.Init(SignUp.window);
+
+
+
+
+
                             SignUp.obj.add(userJson);
 
                             //System.out.println("--------Date:----------");
                             //System.out.println(obj.toString());
 
                             try {
-                                objectMapper.writeValue(new File("users.json"), SignUp.obj);
+
+                                objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("users.json"), SignUp.obj);
                                 FileWriter fil = new FileWriter("Users/" + userTF.getText() + ".json");
                                 fil.write(userJsn.toString());
                                 fil.flush();
@@ -120,9 +135,18 @@ public class MedicBtn extends Button {
                             } catch (IOException err) {
                                 err.printStackTrace();
                             }
+
+                            //MedicMainPage.Init(Main.window);
                         }
+
+                            //MedicMainPage.Init(Main.window);
                         }
                     }
+
+                if(ok == 1)
+                {
+                    MedicMainPage.Init(Main.window);
+                }
             }
 
         });
