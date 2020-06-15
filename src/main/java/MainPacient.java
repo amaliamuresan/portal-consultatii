@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -44,26 +45,17 @@ public class MainPacient extends Application {
         ListView<String> listView=new ListView<>();
         MainPacient.addNumeMedici(listView);
 
-        VBox vb = new VBox();
-        VBox vb2 = new VBox();
+        gridLayout.getChildren().addAll(mainpg,cereri, medici,listView,solicita);
 
-        vb2.setPrefWidth(180);
+        gridLayout.setConstraints(mainpg, 0, 0);
+        gridLayout.setConstraints(cereri, 0, 1);
+        gridLayout.setConstraints(medici, 1, 0);
+        gridLayout.setConstraints(listView,1,1);
+        gridLayout.setConstraints(solicita,1,2);
 
-        vb.setAlignment(Pos.BASELINE_CENTER);
-        vb.setSpacing(7);
-        vb2.setAlignment(Pos.BASELINE_CENTER);
-        vb2.setSpacing(7);
+        gridLayout.setValignment(cereri,VPos.TOP);
 
-        vb2.setPadding(new Insets(10, 10, 10, 10));
-        vb.setPadding(new Insets(10, 10, 10, 10));
-
-        vb.getChildren().addAll(mainpg,cereri);
-        vb2.getChildren().addAll(medici,listView,solicita);
-
-        gridLayout.getChildren().addAll(vb, vb2);
-
-        gridLayout.setConstraints(vb, 0, 0);
-        gridLayout.setConstraints(vb2, 1, 0);
+        gridLayout.setHgap(10);
 
         Scene sceneMain = new Scene(gridLayout, 500, 350);
         window.setScene(sceneMain);
