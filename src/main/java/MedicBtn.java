@@ -77,9 +77,9 @@ public class MedicBtn extends Button {
                                 JSONObject userJsn = new JSONObject();
                                 if(MedicPromptedWindow.doctorData.size() != 0 )
                                 {
-                                    userJsn.put("tip_serviciu:", MedicPromptedWindow.doctorData.get(0));
-                                    userJsn.put("specialitate:", MedicPromptedWindow.doctorData.get(1));
-                                    userJsn.put("cod parafa:", MedicPromptedWindow.doctorData.get(2));
+                                    userJsn.put("tip_serviciu", MedicPromptedWindow.doctorData.get(0));
+                                    userJsn.put("specialitate", MedicPromptedWindow.doctorData.get(1));
+                                    userJsn.put("cod parafa", MedicPromptedWindow.doctorData.get(2));
                                     try {
                                         AdminService.changeAvaibility(MedicPromptedWindow.doctorData.get(2));
                                     } catch (IOException ioException) {
@@ -88,17 +88,17 @@ public class MedicBtn extends Button {
                                 }
                                 if(MedicPromptedWindow.doctorData.size() == 4)
                                 {
-                                    userJsn.put("adresa Spital:", MedicPromptedWindow.doctorData.get(3));
+                                    userJsn.put("adresa Spital", MedicPromptedWindow.doctorData.get(3));
                                 }
 
                                 if(MedicPromptedWindow.doctorData.size()  == 6)
                                 {
-                                    userJsn.put("adresa Clinica:", MedicPromptedWindow.doctorData.get(3));
+                                    userJsn.put("adresa Clinica", MedicPromptedWindow.doctorData.get(3));
                                     JSONObject priceJson = new JSONObject();
-                                    priceJson.put("pret Consult:", MedicPromptedWindow.doctorData.get(4));
-                                    priceJson.put("pret Interpretare:", MedicPromptedWindow.doctorData.get(5));
+                                    priceJson.put("pret Consult", MedicPromptedWindow.doctorData.get(4));
+                                    priceJson.put("pret Interpretare", MedicPromptedWindow.doctorData.get(5));
 
-                                    userJsn.put("preturi:", priceJson );
+                                    userJsn.put("preturi", priceJson );
 
                                 }
 
