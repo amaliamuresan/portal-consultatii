@@ -1,12 +1,10 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 
@@ -60,6 +58,9 @@ public class MainPacient extends Application {
         Scene sceneMain = new Scene(gridLayout, 500, 350);
         window.setScene(sceneMain);
 
+        mainpg.setOnAction(e->window.setScene(sceneMain));
+        cereri.setOnAction((e->window.setScene(MainPacient.makeScenaCereri(sceneMain,window))));
+
         window.show();
     }
 
@@ -69,5 +70,37 @@ public class MainPacient extends Application {
             if (user.getRole().equals("Medic")) {
                 list.getItems().add(user.getUsername());
             }
+    }
+
+    private static Scene makeScenaCereri(Scene sceneMain,Stage w){
+        Button mainpg,anuleaza;
+        mainpg=new Button("Pagina Principala");
+        anuleaza= new Button("Anuleaza cerere");
+
+        mainpg.setPrefWidth(140);
+        anuleaza.setPrefWidth(140);
+
+        Label cere=new Label("Cereri in curs:");
+
+        GridPane gridLayout = new GridPane();
+        gridLayout.setPadding(new Insets(15, 15, 15, 15));
+        gridLayout.setVgap(7);
+        gridLayout.setHgap(1);
+
+        ListView<String> listView=new ListView<>();
+
+        gridLayout.getChildren().addAll(mainpg, cere,listView,anuleaza);
+
+        gridLayout.setConstraints(mainpg, 0, 0);
+        gridLayout.setConstraints(cere, 1, 0);
+        gridLayout.setConstraints(listView,1,1);
+        gridLayout.setConstraints(anuleaza,1,2);
+
+        gridLayout.setHgap(10);
+
+        mainpg.setOnAction(e->w.setScene(sceneMain));
+
+        Scene scenaCereri = new Scene(gridLayout, 500, 350);
+        return scenaCereri;
     }
 }
