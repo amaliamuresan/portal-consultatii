@@ -61,7 +61,6 @@ public class MainPacient extends Application {
 
         Label medici=new Label("Medici disponibili:");
 
-        //GridPane gridLayout = new GridPane();
         gridLayout.setPadding(new Insets(15, 15, 15, 15));
         gridLayout.setVgap(7);
         gridLayout.setHgap(1);
@@ -90,6 +89,9 @@ public class MainPacient extends Application {
 
         window.show();
         //MainPacient.filterMedici("s2");
+
+        mainpg.setOnAction(e->window.setScene(sceneMain));
+        cereri.setOnAction((e->window.setScene(MainPacient.makeScenaCereri(sceneMain,window))));
 
         filtreazaBtn.setOnAction( e -> {
             HBox hb = new HBox(10);
@@ -157,7 +159,37 @@ public class MainPacient extends Application {
         return new JSONObject(content);
     }
 
+    private static Scene makeScenaCereri(Scene sceneMain,Stage w){
+        Button mainpg,anuleaza;
+        mainpg=new Button("Pagina Principala");
+        anuleaza= new Button("Anuleaza cerere");
 
+        mainpg.setPrefWidth(140);
+        anuleaza.setPrefWidth(140);
+
+        Label cere=new Label("Cereri in curs:");
+
+        GridPane gridLayout = new GridPane();
+        gridLayout.setPadding(new Insets(15, 15, 15, 15));
+        gridLayout.setVgap(7);
+        gridLayout.setHgap(1);
+
+        ListView<String> listView=new ListView<>();
+
+        gridLayout.getChildren().addAll(mainpg, cere,listView,anuleaza);
+
+        gridLayout.setConstraints(mainpg, 0, 0);
+        gridLayout.setConstraints(cere, 1, 0);
+        gridLayout.setConstraints(listView,1,1);
+        gridLayout.setConstraints(anuleaza,1,2);
+
+        gridLayout.setHgap(10);
+
+        mainpg.setOnAction(e->w.setScene(sceneMain));
+
+        Scene scenaCereri = new Scene(gridLayout, 500, 350);
+        return scenaCereri;
+    }
 
 
 
