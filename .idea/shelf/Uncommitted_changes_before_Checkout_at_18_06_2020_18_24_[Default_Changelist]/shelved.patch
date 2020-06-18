@@ -1,0 +1,33 @@
+Index: parafe.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[{\"cod\":\"ABCD\",\"available\":\"0\"},{\"cod\":\"DEFG\",\"available\":\"0\"},{\"cod\":\"1234\",\"available\":\"1\"},{\"cod\":\"ABCDE\",\"available\":\"1\"},{\"cod\":\"ABCDEF\",\"available\":\"1\"}]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- parafe.json	(revision 6071ba25d6ef3abb299e90ba3690746cf70e0f60)
++++ parafe.json	(date 1592471526826)
+@@ -1,1 +1,1 @@
+-[{"cod":"ABCD","available":"0"},{"cod":"DEFG","available":"0"},{"cod":"1234","available":"1"},{"cod":"ABCDE","available":"1"},{"cod":"ABCDEF","available":"1"}]
+\ No newline at end of file
++[{"cod":"ABCD","available":"0"},{"cod":"DEFG","available":"0"},{"cod":"1234","available":"0"},{"cod":"ABCDE","available":"1"},{"cod":"ABCDEF","available":"1"}]
+\ No newline at end of file
+Index: users.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[ {\r\n  \"username\" : \"sw\",\r\n  \"password\" : \"43b36d42e7f8e60be58ba4356b6af40c\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"as\",\r\n  \"password\" : \"f970e2767d0cfe75876ea857f92e319b\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"dwa\",\r\n  \"password\" : \"f495be79bad3d692686f63d43283c1f8\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"daw\",\r\n  \"password\" : \"523af537946b79c4f8369ed39ba78605\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"awddwwd\",\r\n  \"password\" : \"32832606886ee83d907a82e8e63b85a0\",\r\n  \"role\" : \"Medic\"\r\n}, {\r\n  \"username\" : \"dad\",\r\n  \"password\" : \"5ca2aa845c8cd5ace6b016841f100d82\",\r\n  \"role\" : \"Medic\"\r\n}, {\r\n  \"username\" : \"DADW\",\r\n  \"password\" : \"b1b54ce7393c62b6765adae3f535329a\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"DAWDY\",\r\n  \"password\" : \"b1b54ce7393c62b6765adae3f535329a\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"test\",\r\n  \"password\" : \"098f6bcd4621d373cade4e832627b4f6\",\r\n  \"role\" : \"Medic\"\r\n} ]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- users.json	(revision 6071ba25d6ef3abb299e90ba3690746cf70e0f60)
++++ users.json	(date 1592471526830)
+@@ -34,4 +34,8 @@
+   "username" : "test",
+   "password" : "098f6bcd4621d373cade4e832627b4f6",
+   "role" : "Medic"
++}, {
++  "username" : "u5",
++  "password" : "202cb962ac59075b964b07152d234b70",
++  "role" : "Medic"
+ } ]
+\ No newline at end of file

@@ -1,0 +1,14 @@
+Index: users.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[{\"username\":\"sw\",\"password\":\"43b36d42e7f8e60be58ba4356b6af40c\",\"role\":\"Pacient\"},{\"username\":\"u1\",\"password\":\"ec6ef230f1828039ee794566b9c58adc\",\"role\":\"Medic\"},{\"username\":\"u2\",\"password\":\"1d665b9b1467944c128a5575119d1cfd\",\"role\":\"Medic\"},{\"username\":\"u3\",\"password\":\"7bc3ca68769437ce986455407dab2a1f\",\"role\":\"Medic\"},{\"username\":\"u4\",\"password\":\"13207e3d5722030f6c97d69b4904d39d\",\"role\":\"Medic\"}]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- users.json	(revision 739203ee6cd0c7f5112a1d071cd6e85895cb0284)
++++ users.json	(date 1592471168364)
+@@ -1,1 +1,1 @@
+-[{"username":"sw","password":"43b36d42e7f8e60be58ba4356b6af40c","role":"Pacient"},{"username":"u1","password":"ec6ef230f1828039ee794566b9c58adc","role":"Medic"},{"username":"u2","password":"1d665b9b1467944c128a5575119d1cfd","role":"Medic"},{"username":"u3","password":"7bc3ca68769437ce986455407dab2a1f","role":"Medic"},{"username":"u4","password":"13207e3d5722030f6c97d69b4904d39d","role":"Medic"}]
+\ No newline at end of file
++[{"username":"sw","password":"43b36d42e7f8e60be58ba4356b6af40c","role":"Pacient"},{"username":"u1","password":"ec6ef230f1828039ee794566b9c58adc","role":"Medic"},{"username":"u2","password":"1d665b9b1467944c128a5575119d1cfd","role":"Medic"},{"username":"u3","password":"7bc3ca68769437ce986455407dab2a1f","role":"Medic"},{"username":"u4","password":"13207e3d5722030f6c97d69b4904d39d","role":"Medic"},{"username":"sas","password":"a8a64cef262a04de4872b68b63ab7cd8","role":"Pacient"}]
+\ No newline at end of file

@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -15,12 +16,15 @@ import org.json.JSONObject;
 public class PatientPromptedWindow {
 
     public static String adress;
+    public static Stage windo;
 
 
 
     public static String window()
     {
+
         Stage window = new Stage();
+        windo = window;
         window.setTitle("Sign Up");
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -35,14 +39,19 @@ public class PatientPromptedWindow {
         TextField adressTF = new TextField();
         adressTF.setPromptText("Scrie adresa");
         Label adressLabel = new Label("Adresa");
-
         layout.getChildren().addAll(adressLabel, adressTF, registerBtn);
 
         registerBtn.getPatientData(adressTF, window);//trimite adresa si window catre PatientPromptedWindow
 
+
+
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
+
+
+
+
 
 
         return adress;

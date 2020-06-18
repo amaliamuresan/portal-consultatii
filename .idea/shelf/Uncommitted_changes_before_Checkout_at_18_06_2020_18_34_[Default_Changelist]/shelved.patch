@@ -1,0 +1,37 @@
+Index: src/main/java/PatientBtn.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import com.fasterxml.jackson.core.JsonProcessingException;\r\nimport com.fasterxml.jackson.core.type.TypeReference;\r\nimport com.fasterxml.jackson.databind.ObjectMapper;\r\nimport javafx.application.Application;\r\nimport javafx.event.EventHandler;\r\nimport javafx.geometry.Insets;\r\nimport javafx.scene.control.Alert;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.layout.*;\r\nimport javafx.stage.Stage;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.event.ActionEvent;\r\nimport org.json.*;\r\n\r\nimport java.io.File;\r\nimport java.io.FileWriter;\r\nimport java.io.IOException;\r\nimport java.security.NoSuchAlgorithmException;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class PatientBtn extends Button{\r\n\r\n    static String adress;\r\n    //List<JsonUser> obj;\r\n\r\n\r\n    public PatientBtn(String value)\r\n    {\r\n        super(value);\r\n    }\r\n\r\n\r\n    public void writeUserDataPatient(TextField userTF, TextField passwordTF) throws IOException {\r\n        ObjectMapper objectMapper = new ObjectMapper();\r\n        File file = new File(\"users.json\");\r\n        SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});\r\n        String Val = this.getText();\r\n        this.setOnAction(e -> {\r\n            //JSONObject userJson = new JSONObject();\r\n            JsonUser userJson = new JsonUser();\r\n\r\n\r\n\r\n            PatientPromptedWindow.window();// apeleaza getPatientData(adresa, stage -> ce trebuie inchis)\r\n            //AdminService parola = new AdminService();\r\n            //userJson.put(\"username\", userTF.getText());\r\n            if(userTF.getText() == null|| userTF.getText().length() == 0 || passwordTF.getText() == null || adress == null||passwordTF.getText().length() ==  0 )\r\n            {\r\n                Alert alert = new Alert(Alert.AlertType.ERROR);\r\n                alert.setTitle(\"Error Dialog\");\r\n                alert.setContentText(\"Completati toate campurile!\");\r\n                alert.show();\r\n\r\n            }\r\n            else {\r\n\r\n                if (AdminService.userAlraedyExists(userTF.getText()) == true) {\r\n                    Alert alert = new Alert(Alert.AlertType.ERROR);\r\n                    alert.setTitle(\"Error Dialog\");\r\n                    alert.setContentText(\"Acest username deja exista!\");\r\n                    alert.show();\r\n                    //AdminService.userAlraedyExists(userTF.getText());\r\n\r\n                } else {\r\n\r\n                    userJson.setUsername(userTF.getText());\r\n\r\n\r\n                    try {\r\n                        userJson.setPassword(AdminService.encrypt(passwordTF.getText()));\r\n                    } catch (NoSuchAlgorithmException noSuchAlgorithmException) {\r\n                        noSuchAlgorithmException.printStackTrace();\r\n                    }\r\n\r\n                    userJson.setRole(Val);\r\n                    //userJson.put(\"adresa:\", adress);\r\n\r\n                    SignUp.obj.add(userJson);\r\n\r\n                    //System.out.println(obj.toString());\r\n\r\n                    try {\r\n                        JSONObject JsnObj = new JSONObject();\r\n                        JsnObj.put(\"adresa\", adress);\r\n                        FileWriter fil  = new FileWriter(\"Users/\" + userTF.getText() + \".json\");\r\n                        fil.write(JsnObj.toString());\r\n                        fil.flush();\r\n\r\n                        objectMapper.writeValue(new File(\"users.json\"), SignUp.obj);\r\n                    } catch (IOException ioException) {\r\n                        ioException.printStackTrace();\r\n                    }\r\n                }\r\n            }\r\n            });\r\n    }\r\n\r\n\r\n    public void  getPatientData(TextField adresaTF, Stage window)\r\n    {\r\n\r\n        this.setOnAction(e -> {\r\n            //JSONObject userJson = new JSONObject();\r\n            //JSON.put(\"adresa:\", adresaTF.getText();\r\n            adress = adresaTF.getText();\r\n            window.close();\r\n\r\n        });\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/PatientBtn.java	(revision 739203ee6cd0c7f5112a1d071cd6e85895cb0284)
++++ src/main/java/PatientBtn.java	(date 1592494496225)
+@@ -25,6 +25,7 @@
+ 
+     static String adress;
+     //List<JsonUser> obj;
++    int ok = 0;
+ 
+ 
+     public PatientBtn(String value)
+@@ -65,6 +66,7 @@
+                     //AdminService.userAlraedyExists(userTF.getText());
+ 
+                 } else {
++                     ok = 1;
+ 
+                     userJson.setUsername(userTF.getText());
+ 
+@@ -95,6 +97,11 @@
+                     }
+                 }
+             }
++
++            if ( ok == 1)
++            {
++                MainPacient.Init(Main.window);
++            }
+             });
+     }
+ 

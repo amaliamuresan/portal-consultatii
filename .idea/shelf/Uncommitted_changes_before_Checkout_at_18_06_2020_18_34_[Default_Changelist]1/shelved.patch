@@ -1,0 +1,35 @@
+Index: src/main/java/MainPacient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import com.fasterxml.jackson.core.type.TypeReference;\r\nimport com.fasterxml.jackson.databind.JavaType;\r\nimport com.fasterxml.jackson.databind.ObjectMapper;\r\nimport javafx.application.Application;\r\nimport javafx.geometry.Insets;\r\nimport javafx.geometry.Pos;\r\nimport javafx.geometry.VPos;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.ListView;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.layout.GridPane;\r\nimport javafx.scene.layout.HBox;\r\nimport javafx.scene.layout.VBox;\r\nimport javafx.stage.Stage;\r\nimport javafx.scene.control.Button;\r\nimport jdk.nashorn.internal.parser.JSONParser;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.io.File;\r\nimport java.io.FileNotFoundException;\r\nimport java.io.FileReader;\r\nimport java.io.IOException;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Paths;\r\nimport java.util.List;\r\n\r\npublic class MainPacient extends Application {\r\n\r\n    private static Object String;\r\n    private Stage window;\r\n    static ListView<String> listView=new ListView<>();\r\n    static GridPane gridLayout = new GridPane();\r\n\r\n    public static void main(String[] args) throws IOException {\r\n\r\n        launch(args);\r\n\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage w) throws Exception{\r\n\r\n        window=w;\r\n\r\n        window.setTitle(\"Pagina Principala\");\r\n\r\n        Button mainpg,cereri,solicita, filtreazaBtn;\r\n        mainpg=new Button(\"Pagina Principala\");\r\n        cereri=new Button(\"Cererile mele\");\r\n        solicita=new Button(\"Cere Serviciu\");\r\n        filtreazaBtn = new Button(\"Filtreaza\");\r\n        Button okBtn = new Button(\"OK\");\r\n        TextField specialtyTF = new TextField();\r\n        specialtyTF.setPromptText(\"Alegeti specializarea\");\r\n\r\n        mainpg.setPrefWidth(140);\r\n        cereri.setPrefWidth(130);\r\n        solicita.setPrefWidth(130);\r\n\r\n        Label medici=new Label(\"Medici disponibili:\");\r\n\r\n        //GridPane gridLayout = new GridPane();\r\n        gridLayout.setPadding(new Insets(15, 15, 15, 15));\r\n        gridLayout.setVgap(7);\r\n        gridLayout.setHgap(1);\r\n\r\n\r\n\r\n        MainPacient.addNumeMedici(listView);\r\n\r\n        gridLayout.getChildren().addAll(mainpg,cereri, medici,listView,solicita, filtreazaBtn);\r\n\r\n        gridLayout.setConstraints(mainpg, 0, 0);\r\n        gridLayout.setConstraints(cereri, 0, 1);\r\n        gridLayout.setConstraints(medici, 1, 0);\r\n        gridLayout.setConstraints(listView,1,1);\r\n        gridLayout.setConstraints(solicita,1,2);\r\n        gridLayout.setConstraints(filtreazaBtn, 0, 2);\r\n\r\n        gridLayout.setValignment(cereri,VPos.TOP);\r\n\r\n        gridLayout.setHgap(10);\r\n\r\n\r\n\r\n        Scene sceneMain = new Scene(gridLayout, 500, 350);\r\n        window.setScene(sceneMain);\r\n\r\n        window.show();\r\n        //MainPacient.filterMedici(\"s2\");\r\n\r\n        filtreazaBtn.setOnAction( e -> {\r\n            HBox hb = new HBox(10);\r\n            hb.getChildren().addAll(specialtyTF, okBtn);\r\n            hb.setAlignment(Pos.BASELINE_CENTER);\r\n            hb.setPadding(new Insets(5, 5,5,5));\r\n            Stage wi= new Stage();\r\n            wi.setTitle(\"Filtreaza\");\r\n\r\n            Scene sc = new Scene(hb, 300, 50);\r\n            wi.setScene(sc);\r\n            wi.show();\r\n\r\n            okBtn.setOnAction( r -> {\r\n                try {\r\n                    MainPacient.filterMedici(specialtyTF.getText());\r\n\r\n\r\n                    wi.close();\r\n                } catch (IOException ioException) {\r\n                    ioException.printStackTrace();\r\n                }\r\n            });\r\n\r\n        });\r\n    }\r\n\r\n    private static void addNumeMedici(ListView<String> list){\r\n        Main.updateUsers();\r\n        for (JsonUser user: SignUp.obj)\r\n            if (user.getRole().equals(\"Medic\")) {\r\n                list.getItems().add(user.getUsername());\r\n            }\r\n    }\r\n\r\n    private static void filterMedici(String spec) throws IOException {\r\n        //ListView<String> filtredList = new ListView<>();\r\n        listView.getItems().clear();\r\n        for (JsonUser user: SignUp.obj)\r\n            if (user.getRole().equals(\"Medic\")) {\r\n                String filename = \"Users/\" + user.getUsername() + \".json\";\r\n                ObjectMapper objectMapper = new ObjectMapper();\r\n                File file = new File(filename);\r\n                JSONObject jsonObject = parseJSONFile(filename);\r\n                String speciality = (java.lang.String) jsonObject.get(\"specialitate\");\r\n                if(speciality.equals(spec))\r\n                    listView.getItems().add(user.getUsername());\r\n\r\n\r\n            }\r\n\r\n        //listView = filtredList;\r\n           // listView.refresh();\r\n        //listView.getItems().clear();\r\n\r\n        //gridLayout.setConstraints(filtredList,1,1);\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n    public static JSONObject parseJSONFile(String filename) throws JSONException, IOException {\r\n        String content = new String(Files.readAllBytes(Paths.get(filename)));\r\n        return new JSONObject(content);\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n}\r\n
+===================================================================
+--- src/main/java/MainPacient.java	(revision 739203ee6cd0c7f5112a1d071cd6e85895cb0284)
++++ src/main/java/MainPacient.java	(date 1592494496235)
+@@ -26,21 +26,21 @@
+ import java.nio.file.Paths;
+ import java.util.List;
+ 
+-public class MainPacient extends Application {
++public class MainPacient {
+ 
+     private static Object String;
+-    private Stage window;
++    private static  Stage window;
+     static ListView<String> listView=new ListView<>();
+     static GridPane gridLayout = new GridPane();
+ 
+-    public static void main(String[] args) throws IOException {
++    /*public static void main(String[] args) throws IOException {
+ 
+         launch(args);
+ 
+-    }
++    }*/
+ 
+-    @Override
+-    public void start(Stage w) throws Exception{
++
++    public static void Init(Stage w) throws Exception{
+ 
+         window=w;
+ 

@@ -16,6 +16,8 @@ public class Main extends Application{
 
     private Button login, signup;
 
+    public static Stage window;
+
     public static void main(String[] args) {
 
         launch(args);

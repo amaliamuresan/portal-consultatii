@@ -26,23 +26,23 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class MainPacient extends Application {
+public class MainPacient {
 
     private static Object String;
-    private Stage window;
+   // private static Stage window;
     static ListView<String> listView=new ListView<>();
     static GridPane gridLayout = new GridPane();
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
 
         launch(args);
 
-    }
+    }*/
 
-    @Override
-    public void start(Stage w) throws Exception{
 
-        window=w;
+    public static void init(Stage window) throws Exception{
+
+        //window=w;
 
         window.setTitle("Pagina Principala");
 
@@ -88,7 +88,7 @@ public class MainPacient extends Application {
         Scene sceneMain = new Scene(gridLayout, 500, 350);
         window.setScene(sceneMain);
 
-        window.show();
+        //window.show();
         //MainPacient.filterMedici("s2");
 
         filtreazaBtn.setOnAction( e -> {
@@ -156,6 +156,12 @@ public class MainPacient extends Application {
         String content = new String(Files.readAllBytes(Paths.get(filename)));
         return new JSONObject(content);
     }
+
+   /* public static void setStage(Stage stage)
+    {
+        window = stage;
+    }*/
+
 
 
 
