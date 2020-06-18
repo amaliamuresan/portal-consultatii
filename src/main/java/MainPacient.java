@@ -26,23 +26,23 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class MainPacient extends Application {
+public class MainPacient {
 
     private static Object String;
     private Stage window;
     static ListView<String> listView=new ListView<>();
     static GridPane gridLayout = new GridPane();
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
 
         launch(args);
 
-    }
+    }*/
 
-    @Override
-    public void start(Stage w) throws Exception{
+    //@Override
+    public static void init(Stage window) throws Exception{
 
-        window=w;
+        //window=w;
 
         window.setTitle("Pagina Principala");
 

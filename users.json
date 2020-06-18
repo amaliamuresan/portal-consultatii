@@ -34,4 +34,20 @@
   "username" : "test",
   "password" : "098f6bcd4621d373cade4e832627b4f6",
   "role" : "Medic"
+}, {
+  "username" : "wada66",
+  "password" : "4ab47e54c2f73ad4c0eb3974709721cd",
+  "role" : "Pacient"
+}, {
+  "username" : "p1",
+  "password" : "ec6ef230f1828039ee794566b9c58adc",
+  "role" : "Pacient"
+}, {
+  "username" : "m1",
+  "password" : "ae7be26cdaa742ca148068d5ac90eaca",
+  "role" : "Medic"
+}, {
+  "username" : "p2",
+  "password" : "1d665b9b1467944c128a5575119d1cfd",
+  "role" : "Pacient"
 } ]

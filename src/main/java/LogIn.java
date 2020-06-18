@@ -78,6 +78,18 @@ public class LogIn {
                                 {
                                     MedicMainPage.Init(window);
                                 }
+                                else
+                                {
+                                    if(AdminService.returnRole(usernameTF.getText()).equals("Medic"))
+                                    {
+                                        MedicMainPage.Init(Main.window);
+                                    }
+                                    else
+                                        {
+                                            MainPacient.init(Main.window);
+
+                                    }
+                                }
 
 
                             } catch (Exception exception) {
@@ -85,6 +97,7 @@ public class LogIn {
                             }
 
                         }
+
                     }
 
 

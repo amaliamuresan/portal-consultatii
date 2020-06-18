@@ -21,7 +21,7 @@ import java.util.List;
 public class PatientBtn extends Button{
 
     static String adress;
-
+    static int valid = 0;
 
 
 
@@ -37,15 +37,16 @@ public class PatientBtn extends Button{
         SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});
         String Val = this.getText();
         this.setOnAction(e -> {
+            valid = 0;
             //JSONObject userJson = new JSONObject();
             JsonUser userJson = new JsonUser();
 
 
 
-            PatientPromptedWindow.window();// apeleaza getPatientData(adresa, stage -> ce trebuie inchis)
+            // apeleaza getPatientData(adresa, stage -> ce trebuie inchis)
             //AdminService parola = new AdminService();
             //userJson.put("username", userTF.getText());
-            if(userTF.getText() == null|| userTF.getText().length() == 0 || passwordTF.getText() == null || adress == null||passwordTF.getText().length() ==  0 )
+            if(userTF.getText() == null|| userTF.getText().length() == 0 || passwordTF.getText() == null || passwordTF.getText().length() ==  0 )
             {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Dialog");
@@ -63,6 +64,8 @@ public class PatientBtn extends Button{
                     //AdminService.userAlraedyExists(userTF.getText());
 
                 } else {
+                    valid = 1;
+                    PatientPromptedWindow.window();
 
                     userJson.setUsername(userTF.getText());
 
@@ -105,9 +108,26 @@ public class PatientBtn extends Button{
             //JSON.put("adresa:", adresaTF.getText();
             adress = adresaTF.getText();
 
-            //MedicMainPage.Init(SignUp.window);
+            if (adress == null || adress.equals(""))
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setContentText("Completati toate campurile!");
+                alert.show();
+            }
+            else {
 
-            //MedicMainPage.start(window);
+                if (valid == 1) {
+                    try {
+                        MainPacient.init(window);
+                        SignUp.window.close();
+
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                }
+            }
+
 
 
         });
