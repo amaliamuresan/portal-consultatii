@@ -26,9 +26,7 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("users.json");
-        SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});
+        Main.updateUsers();
 
         window = primaryStage;
         primaryStage.setTitle("Portal consultatii");
@@ -60,5 +58,15 @@ public class Main extends Application{
         primaryStage.setScene(scene);
         //System.out.println(SignUp.obj);
         primaryStage.show();
+    }
+
+    public static void updateUsers(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File("users.json");
+        try {
+            SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});
+        }catch (IOException e1){
+            e1.printStackTrace();
+        }
     }
 }
