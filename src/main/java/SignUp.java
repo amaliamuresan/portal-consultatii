@@ -28,7 +28,7 @@ public class SignUp {
    // }
 
     public static Stage window;
-    LoadUsers l = new LoadUsers();
+    //LoadUsers l = new LoadUsers();
 
 
     //@Override
@@ -79,6 +79,7 @@ public class SignUp {
 
         Scene sceneSignUp = new Scene(gridLayout, 350, 250);
         window.setScene(sceneSignUp);
+        //System.out.println(SignUp.obj);
 
         window.show();
 

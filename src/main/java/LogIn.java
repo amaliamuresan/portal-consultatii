@@ -1,3 +1,4 @@
+import Medic.MedicMainPage;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,6 +36,8 @@ public class LogIn {
         alert.setContentText("Username sau password gresit!");
 
 
+
+
         GridPane gridLayout=new GridPane();
         gridLayout.setPadding(new Insets(15, 15, 15, 15));
         gridLayout.setVgap(7);
@@ -45,8 +48,8 @@ public class LogIn {
         Label passwordLabel = new Label("Password");
         TextField usernameTF = new TextField();
         TextField passwordTF = new TextField();
-        usernameTF.setPromptText("Create an username");
-        passwordTF.setPromptText("Create a password");
+        usernameTF.setPromptText("Enter your username");
+        passwordTF.setPromptText("Enter your password");
 
         gridLayout.setConstraints(usernameLabel, 0, 1 );
         gridLayout.setConstraints(passwordLabel, 0, 2);
@@ -70,6 +73,11 @@ public class LogIn {
                             alert.show();
                         else {
                             try {
+
+                                if(AdminService.returnRole(usernameTF.getText()).equals("Medic"))
+                                {
+                                    MedicMainPage.Init(window);
+                                }
 
 
                             } catch (Exception exception) {

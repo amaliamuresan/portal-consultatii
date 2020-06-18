@@ -77,10 +77,13 @@ public class AdminService {
 
     }
 
+
+
     public static Parafa verificareParafa(String cod) {
         for (Parafa el : Parafa.listaCoduri) {
             if (cod.equals(el.getCod())) {
                 if (el.getAvailable().equals("1"))
+
                     return el;
             }
 
@@ -115,6 +118,26 @@ public class AdminService {
         return false;
 
     }
+
+    public static String returnRole(String username)
+    {
+        for (JsonUser usr : SignUp.obj) {
+
+            if (usr != null) {
+                if (usr.getUsername().equals(username))
+                {
+                    return usr.getRole();
+                }
+
+
+            }
+        }
+
+        return null;
+
+    }
+
+
 }
 
 

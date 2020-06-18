@@ -23,7 +23,7 @@ public class PatientPromptedWindow {
         Stage window = new Stage();
         window.setTitle("Sign Up");
 
-        window.initModality(Modality.APPLICATION_MODAL);
+        //window.initModality(Modality.APPLICATION_MODAL);
 
         VBox layout = new VBox(10);
         layout.minWidth(250);

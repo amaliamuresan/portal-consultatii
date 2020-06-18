@@ -1,3 +1,4 @@
+import Medic.MedicMainPage;
 import com.sun.org.apache.xerces.internal.xs.StringList;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.EventHandler;
 import java.util.ArrayList;
@@ -27,15 +29,17 @@ public class MedicPromptedWindow
 
     static VBox layout;
     static int c = 0;
+    public static Stage window = new Stage();
+    public static MedicBtn btn = new MedicBtn("Inregistreaza");
 
 
 
         public static void window() {
 
-            Stage window = new Stage();
+            //Stage window = new Stage();
             window.setTitle("Sign Up");
 
-            window.initModality(Modality.APPLICATION_MODAL);
+            //window.initModality(Modality.APPLICATION_MODAL);
 
             VBox layout = new VBox(10);
             layout.minWidth(450);
@@ -65,7 +69,7 @@ public class MedicPromptedWindow
                 doctorData = new ArrayList<>();
 
                 Label AdresaLabel = new Label("Adresa spitalului:");
-                MedicBtn btn = new MedicBtn("Inregistreaza");
+                //MedicBtn btn = new MedicBtn("Inregistreaza");
 
 
                 if(publicCB.isSelected()) {
@@ -80,7 +84,9 @@ public class MedicPromptedWindow
                             doctorData.add(codParafaTF.getText());//2
                             //System.out.println(doctorData);
                             doctorData.add(AdresaSpitalTF.getText());//3
+
                             window.close();
+
 
                         });
 
@@ -126,9 +132,12 @@ public class MedicPromptedWindow
                             doctorData.add(AdresaClinicaTF.getText());//3
                             doctorData.add(consulatatieTF.getText());//4
                             doctorData.add(interpretareTF.getText());//5
-
-
                             window.close();
+
+
+
+
+                            //window.close();
                             //System.out.println(doctorData);
 
                         });
@@ -143,11 +152,11 @@ public class MedicPromptedWindow
 
 
 
-
-
             Scene scene = new Scene(layout, 350, 450);
             window.setScene(scene);
             window.showAndWait();
 
         }
+
+
 }
