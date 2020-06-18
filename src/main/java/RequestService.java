@@ -5,6 +5,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
+import java.io.IOException;
+
 public class RequestService {
     public static void promptChoice(){
         Stage window=new Stage();
@@ -43,5 +45,19 @@ public class RequestService {
 
         Scene scene=new Scene(vb,600,250);
         window.setScene(scene);
+
+        submit.setOnAction(e-> {
+            try {
+                RequestService.cereConsultatie();
+                window.close();
+            }catch (IOException exception){
+                exception.printStackTrace();
+            }
+        });
+    }
+
+    private static void cereConsultatie() throws IOException {
+        Main.updateUsers();
+
     }
 }
