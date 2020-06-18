@@ -2,6 +2,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -11,7 +12,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import jdk.nashorn.internal.parser.JSONParser;
@@ -92,6 +92,14 @@ public class MainPacient extends Application {
 
         mainpg.setOnAction(e->window.setScene(sceneMain));
         cereri.setOnAction((e->window.setScene(MainPacient.makeScenaCereri(sceneMain,window))));
+        solicita.setOnAction(e->{
+            if(listView.getSelectionModel().isEmpty()) {
+                Label label = new Label("Selectati un medic, apoi faceti o cerere!!!");
+                gridLayout.add(label, 1, 3);
+            }
+            else
+                RequestService.promptChoice();
+        });
 
         filtreazaBtn.setOnAction( e -> {
             HBox hb = new HBox(10);
