@@ -25,5 +25,23 @@ public class RequestService {
         Scene scene=new Scene(vbox,650,250);
         window.setScene(scene);
         window.show();
+
+        consult.setOnAction(e-> RequestService.consultScene(window));
+    }
+
+    private static void consultScene(Stage window){
+        Label label=new Label("Descrieti simptomele dumneavoastra in caseta text de mai jos");
+        TextArea text=new TextArea();
+        Button submit=new Button("Submit");
+
+        text.setMinHeight(100);
+        text.setMaxWidth(300);
+
+        VBox vb=new VBox(20);
+        vb.getChildren().addAll(label,text,submit);
+        vb.setAlignment(Pos.CENTER);
+
+        Scene scene=new Scene(vb,600,250);
+        window.setScene(scene);
     }
 }
