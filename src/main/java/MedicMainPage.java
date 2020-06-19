@@ -107,6 +107,8 @@ public class MedicMainPage{
              }
         });
 
+        updatePriceBtn.setOnAction(e-> UpdatePrice.startUpdatePrice(window));
+
 
         //window.show();
 

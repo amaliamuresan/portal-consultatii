@@ -18,4 +18,8 @@
   "username" : "medic",
   "password" : "0d20326e6155cae6bb2b510bfc2cc01e",
   "role" : "Medic"
+}, {
+  "username" : "medic2",
+  "password" : "54df8e7e0aac22da2123ed1af89ce85f",
+  "role" : "Medic"
 } ]
