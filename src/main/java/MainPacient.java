@@ -49,7 +49,7 @@ public class MainPacient {
 
         window.setTitle("Pagina Principala");
 
-        Button mainpg,cereri,solicita, filtreazaBtn;
+        Button mainpg,cereri,solicita, filtreazaBtn, raspunsuriBtn;
         mainpg=new Button("Pagina Principala");
         cereri=new Button("Cererile mele");
         solicita=new Button("Cere Serviciu");
@@ -57,6 +57,8 @@ public class MainPacient {
         Button okBtn = new Button("OK");
         TextField specialtyTF = new TextField();
         specialtyTF.setPromptText("Alegeti specializarea");
+
+        raspunsuriBtn = new Button("Raspunsuri");
 
         mainpg.setPrefWidth(140);
         cereri.setPrefWidth(130);
@@ -72,7 +74,7 @@ public class MainPacient {
 
         MainPacient.addNumeMedici(listView);
 
-        gridLayout.getChildren().addAll(mainpg,cereri, medici,listView,solicita, filtreazaBtn);
+        gridLayout.getChildren().addAll(mainpg,cereri, medici,listView,solicita, filtreazaBtn, raspunsuriBtn);
 
         gridLayout.setConstraints(mainpg, 0, 0);
         gridLayout.setConstraints(cereri, 0, 1);
@@ -80,6 +82,7 @@ public class MainPacient {
         gridLayout.setConstraints(listView,1,1);
         gridLayout.setConstraints(solicita,1,2);
         gridLayout.setConstraints(filtreazaBtn, 0, 2);
+        gridLayout.setConstraints(raspunsuriBtn, 0, 3);
 
         gridLayout.setValignment(cereri,VPos.TOP);
 
@@ -173,9 +176,10 @@ public class MainPacient {
     }
 
     private static Scene makeScenaCereri(Scene sceneMain,Stage w){
-        Button mainpg,anuleaza;
+        Button mainpg,anuleaza, raspunsuriBtn;
         mainpg=new Button("Pagina Principala");
         anuleaza= new Button("Anuleaza cerere");
+        raspunsuriBtn = new Button("Raspunsuri");
 
         mainpg.setPrefWidth(140);
         anuleaza.setPrefWidth(140);
@@ -196,6 +200,7 @@ public class MainPacient {
         gridLayout.setConstraints(cere, 1, 0);
         gridLayout.setConstraints(listView,1,1);
         gridLayout.setConstraints(anuleaza,1,2);
+        gridLayout.setConstraints(raspunsuriBtn, 0, 1);
 
         gridLayout.setHgap(10);
 

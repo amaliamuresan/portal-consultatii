@@ -86,4 +86,9 @@ public class RequestService {
         file.write(jsonObject.toString());
         file.flush();
     }
+
+    private static void anuleazaCererea(String numeMedic)
+    {
+
+    }
 }
