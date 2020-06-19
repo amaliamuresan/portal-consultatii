@@ -4,10 +4,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
 
 public class RequestService {
 
@@ -66,11 +70,14 @@ public class RequestService {
         for (JsonUser user:SignUp.obj){
             if(user.getUsername().equals(MainPacient.selectedDoctor)){
                 String filename = "Users/" + user.getUsername() + ".json";
+                JSONObject medicJson = MainPacient.parseJSONFile(filename);
+                JSONObject cere= new JSONObject();
+                cere.put(LogIn.loggedUser.getUsername(),txt);
+                JSONArray cereri = medicJson.getJSONArray("Cereri");
+                cereri.put(cere);
                 FileWriter file = new FileWriter(filename);
-                JSONObject jsonObject = MainPacient.parseJSONFile(filename);
-                jsonObject.put("Cerere")
-                /*file.write(txt);
-                file.flush();*/
+                file.write(medicJson.toString());
+                file.flush();
             }
         }
     }

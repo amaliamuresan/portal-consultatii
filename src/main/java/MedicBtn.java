@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -111,7 +112,8 @@ public class MedicBtn extends Button {
                                 userJsn.put("preturi", priceJson);
 
                             }
-
+                            ArrayList<JSONObject> cereri=new ArrayList<>();
+                            userJsn.put("Cereri",cereri);
                             ok = 1;
 
                             //MedicMainPage.Init(SignUp.window);
