@@ -38,6 +38,7 @@ public class RequestService {
         window.show();
 
         consult.setOnAction(e-> RequestService.consultScene(window));
+        interpretare.setOnAction(e-> RequestService.interpretScene(window));
     }
 
     private static void consultScene(Stage window){
@@ -56,7 +57,8 @@ public class RequestService {
 
         submit.setOnAction(e-> {
             try {
-                RequestService.cereConsultatie();
+                String txt=text.getText();
+                RequestService.cereConsultatie(txt);
                 window.close();
             }catch (IOException exception){
                 exception.printStackTrace();
@@ -64,9 +66,8 @@ public class RequestService {
         });
     }
 
-    private static void cereConsultatie() throws IOException {
+    private static void cereConsultatie(String txt) throws IOException {
         Main.updateUsers();
-        String txt=text.getText();
         for (JsonUser user:SignUp.obj){
             if(user.getUsername().equals(MainPacient.selectedDoctor))
                 trimiteCerere(LogIn.loggedUser.getUsername(),user,txt);
@@ -85,6 +86,32 @@ public class RequestService {
         FileWriter file = new FileWriter(filename);
         file.write(jsonObject.toString());
         file.flush();
+    }
+
+    private static void interpretScene(Stage window){
+        Label label=new Label("Introduceti rezultatele testului");
+        Button submit=new Button("Submit");
+        TextArea text=new TextArea();
+
+        text.setMinHeight(100);
+        text.setMaxWidth(300);
+
+        VBox vb=new VBox(20);
+        vb.getChildren().addAll(label,text,submit);
+        vb.setAlignment(Pos.CENTER);
+
+        Scene scene=new Scene(vb,600,250);
+        window.setScene(scene);
+
+        submit.setOnAction(e-> {
+            try {
+                String txt=text.getText();
+                RequestService.cereConsultatie(txt);
+                window.close();
+            }catch (IOException exception){
+                exception.printStackTrace();
+            }
+        });
     }
 
     private static void anuleazaCererea(String numeMedic)

@@ -218,8 +218,18 @@ public class MainPacient {
                 try {
                     JSONObject jsonObject = MainPacient.parseJSONFile(filename);
                     JSONArray cereri = jsonObject.getJSONArray("Cereri");
-                    for(int i=0;i<cereri.length();i++)
-                        list.getItems().add(cereri.getJSONObject(i).toString());
+                    for(int i=0;i<cereri.length();i++) {
+                        String string=cereri.getJSONObject(i).toString(),cerere=new String("");
+                        for(int j=0;j<string.length();j++){
+                            char c=string.charAt(j);
+                            if(c==':')
+                                cerere+=" -> ";
+                            else
+                            if(c != '{' && c!='}' && c!='"')
+                                cerere+=c;
+                        }
+                        list.getItems().add(cerere);
+                    }
                 }catch (IOException exception){
                     exception.printStackTrace();
                 }
