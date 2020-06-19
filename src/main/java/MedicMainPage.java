@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import org.json.JSONObject;
 
 import java.awt.*;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import static javafx.application.Application.launch;
@@ -31,8 +32,8 @@ public class MedicMainPage{
         Label requestLabel = new Label("Lista cereri:");
         Button myPatientsBtn = new Button("Pacienti internati");
         Button updatePriceBtn = new Button("Actualizeaza preturi");
-        Button suspendActivityB = new Button("Suspenda Activitatea");
-        Button resumeActivityB = new Button("Reia Activitatea");
+        Button suspendActivityB = new Button();
+
 
 
         window.setTitle("Main Page");
@@ -60,6 +61,18 @@ public class MedicMainPage{
         vb2.setPadding(new Insets(10, 10, 10, 10));
         vb.setPadding(new Insets(10, 10, 10, 10));
 
+        String filename = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+        try {
+            JSONObject jsonObject = MainPacient.parseJSONFile(filename);
+            if((int)jsonObject.get("Activitate") == 1) {
+                suspendActivityB.setText("Suspenda Activitatea");
+            }else {
+                suspendActivityB.setText("Reia Activitatea");
+            }
+
+        }catch(IOException exp){
+            exp.printStackTrace();
+        }
         vb.getChildren().addAll(suspendActivityB, updatePriceBtn, myPatientsBtn);
         vb2.getChildren().addAll(requestLabel);
 
@@ -73,17 +86,22 @@ public class MedicMainPage{
 
         suspendActivityB.setOnAction(e-> {
 
-            String filename = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+            String fname = "Users/" + LogIn.loggedUser.getUsername() + ".json";
              try {
-                 JSONObject jsonObject = MainPacient.parseJSONFile(filename);
+                 JSONObject jsonObject = MainPacient.parseJSONFile(fname);
                  if(suspendActivityB.getText().equals("Suspenda Activitatea")){
+                 jsonObject.remove("Activitate");
                  jsonObject.put("Activitate", 0);
                  suspendActivityB.setText("Reia Activitatea");
                  }
                  else {
+                     jsonObject.remove("Activitate");
                      jsonObject.put("Activitate", 1);
                      suspendActivityB.setText("Suspenda Activitatea");
                  }
+                 FileWriter file = new FileWriter(fname);
+                 file.write(jsonObject.toString());
+                 file.flush();
              }catch(IOException exep){
                  exep.printStackTrace();
              }

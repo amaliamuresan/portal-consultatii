@@ -3,10 +3,6 @@
   "password" : "8287458823facb8ff918dbfabcd22ccb",
   "role" : "Pacient"
 }, {
-  "username" : "medic",
-  "password" : "1a1dc91c907325c69271ddf0c944bc72",
-  "role" : "Medic"
-}, {
   "username" : "pacient1",
   "password" : "f63ed3300797216784db8387a2deaff0",
   "role" : "Pacient"
@@ -18,4 +14,8 @@
   "username" : "pacient3",
   "password" : "93a7ffba27902537651fb3dbca8ae802",
   "role" : "Pacient"
+}, {
+  "username" : "medic",
+  "password" : "0d20326e6155cae6bb2b510bfc2cc01e",
+  "role" : "Medic"
 } ]
