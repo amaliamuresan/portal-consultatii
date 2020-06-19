@@ -136,7 +136,15 @@ public class MainPacient {
         Main.updateUsers();
         for (JsonUser user: SignUp.obj)
             if (user.getRole().equals("Medic")) {
-                list.getItems().add(user.getUsername());
+                String filename = "Users/" + user.getUsername() + ".json";
+                try {
+                    JSONObject jsonObject = MainPacient.parseJSONFile(filename);
+                    if((int)jsonObject.get("Activitate") == 1)
+                        list.getItems().add(user.getUsername());
+                }catch(IOException exp){
+                    exp.printStackTrace();
+                }
+
             }
     }
 
