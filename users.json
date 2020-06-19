@@ -70,4 +70,8 @@
   "username" : "pacient3",
   "password" : "93a7ffba27902537651fb3dbca8ae802",
   "role" : "Pacient"
+}, {
+  "username" : "pacient4",
+  "password" : "e75a610f0223c3ea6fe6cb5d9e22beb7",
+  "role" : "Pacient"
 } ]
