@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +25,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainPacient {
@@ -186,6 +188,7 @@ public class MainPacient {
         gridLayout.setHgap(1);
 
         ListView<String> listView=new ListView<>();
+        MainPacient.addCererileMele(listView);
 
         gridLayout.getChildren().addAll(mainpg, cere,listView,anuleaza);
 
@@ -202,6 +205,20 @@ public class MainPacient {
         return scenaCereri;
     }
 
-
+    private static void addCererileMele(ListView<String> list){
+        Main.updateUsers();
+        for (JsonUser user: SignUp.obj)
+            if (user.getUsername().equals(LogIn.loggedUser.getUsername())) {
+                String filename = "Users/" + user.getUsername() + ".json";
+                try {
+                    JSONObject jsonObject = MainPacient.parseJSONFile(filename);
+                    JSONArray cereri = jsonObject.getJSONArray("Cereri");
+                    for(int i=0;i<cereri.length();i++)
+                        list.getItems().add(cereri.getJSONObject(i).toString());
+                }catch (IOException exception){
+                    exception.printStackTrace();
+                }
+            }
+    }
 
 }

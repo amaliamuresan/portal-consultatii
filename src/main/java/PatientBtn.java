@@ -22,19 +22,13 @@ public class PatientBtn extends Button{
 
     static String adress;
     static int valid = 0;
-    private TextField userTF,passwordTF;
-
-
 
     public PatientBtn(String value)
     {
         super(value);
     }
 
-
-    public void writeUserDataPatient(TextField usernTF, TextField passworTF) throws IOException {
-        userTF=usernTF;
-        passwordTF=passworTF;
+    public void writeUserDataPatient(TextField userTF, TextField passwordTF) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File("users.json");
         SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});
@@ -68,7 +62,7 @@ public class PatientBtn extends Button{
 
                 } else {
                     valid = 1;
-                    PatientPromptedWindow.window();
+                    PatientPromptedWindow.window(userTF, passwordTF);
 
                     userJson.setUsername(userTF.getText());
 
@@ -89,6 +83,8 @@ public class PatientBtn extends Button{
                     try {
                         JSONObject JsnObj = new JSONObject();
                         JsnObj.put("adresa", adress);
+                        ArrayList<JSONObject> cereri=new ArrayList<>();
+                        JsnObj.put("Cereri",cereri);
                         FileWriter fil  = new FileWriter("Users/" + userTF.getText() + ".json");
                         fil.write(JsnObj.toString());
                         fil.flush();
@@ -103,7 +99,7 @@ public class PatientBtn extends Button{
     }
 
 
-    public void  getPatientData(TextField adresaTF, Stage window)
+    public void  getPatientData(TextField adresaTF, Stage window,TextField userTF, TextField passwordTF)
     {
 
         this.setOnAction(e -> {

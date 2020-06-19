@@ -58,4 +58,16 @@
   "username" : "medic",
   "password" : "1a1dc91c907325c69271ddf0c944bc72",
   "role" : "Medic"
+}, {
+  "username" : "pacient1",
+  "password" : "f63ed3300797216784db8387a2deaff0",
+  "role" : "Pacient"
+}, {
+  "username" : "pacient2",
+  "password" : "a1442bfc190d52303727e63719962ed6",
+  "role" : "Pacient"
+}, {
+  "username" : "pacient3",
+  "password" : "93a7ffba27902537651fb3dbca8ae802",
+  "role" : "Pacient"
 } ]

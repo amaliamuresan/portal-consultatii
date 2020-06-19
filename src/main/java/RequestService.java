@@ -68,17 +68,22 @@ public class RequestService {
         Main.updateUsers();
         String txt=text.getText();
         for (JsonUser user:SignUp.obj){
-            if(user.getUsername().equals(MainPacient.selectedDoctor)){
-                String filename = "Users/" + user.getUsername() + ".json";
-                JSONObject medicJson = MainPacient.parseJSONFile(filename);
-                JSONObject cere= new JSONObject();
-                cere.put(LogIn.loggedUser.getUsername(),txt);
-                JSONArray cereri = medicJson.getJSONArray("Cereri");
-                cereri.put(cere);
-                FileWriter file = new FileWriter(filename);
-                file.write(medicJson.toString());
-                file.flush();
-            }
+            if(user.getUsername().equals(MainPacient.selectedDoctor))
+                trimiteCerere(LogIn.loggedUser.getUsername(),user,txt);
+            if(user.getUsername().equals(LogIn.loggedUser.getUsername()))
+                trimiteCerere(MainPacient.selectedDoctor,user,txt);
         }
+    }
+
+    private static void trimiteCerere(String key,JsonUser user,String txt) throws IOException{
+        String filename = "Users/" + user.getUsername() + ".json";
+        JSONObject jsonObject= MainPacient.parseJSONFile(filename);
+        JSONObject cere= new JSONObject();
+        cere.put(key,txt);
+        JSONArray cereri = jsonObject.getJSONArray("Cereri");
+        cereri.put(cere);
+        FileWriter file = new FileWriter(filename);
+        file.write(jsonObject.toString());
+        file.flush();
     }
 }

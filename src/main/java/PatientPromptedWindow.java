@@ -18,7 +18,7 @@ public class PatientPromptedWindow {
 
 
 
-    public static String window()
+    public static String window(TextField userTF, TextField passwordTF)
     {
         Stage window = new Stage();
         window.setTitle("Sign Up");
@@ -38,7 +38,7 @@ public class PatientPromptedWindow {
 
         layout.getChildren().addAll(adressLabel, adressTF, registerBtn);
 
-        registerBtn.getPatientData(adressTF, window);//trimite adresa si window catre PatientPromptedWindow
+        registerBtn.getPatientData(adressTF, window, userTF, passwordTF);//trimite adresa si window catre PatientPromptedWindow
 
         Scene scene = new Scene(layout);
         window.setScene(scene);
