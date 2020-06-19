@@ -22,6 +22,7 @@ public class PatientBtn extends Button{
 
     static String adress;
     static int valid = 0;
+    private TextField userTF,passwordTF;
 
 
 
@@ -31,7 +32,9 @@ public class PatientBtn extends Button{
     }
 
 
-    public void writeUserDataPatient(TextField userTF, TextField passwordTF) throws IOException {
+    public void writeUserDataPatient(TextField usernTF, TextField passworTF) throws IOException {
+        userTF=usernTF;
+        passwordTF=passworTF;
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File("users.json");
         SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});
@@ -119,6 +122,7 @@ public class PatientBtn extends Button{
 
                 if (valid == 1) {
                     try {
+                        LogIn.loggedUser=new JsonUser(userTF.getText(),passwordTF.getText(),"Pacient");
                         MainPacient.init(window);
                         SignUp.window.close();
 

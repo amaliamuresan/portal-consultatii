@@ -4,10 +4,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
+import org.json.JSONObject;
 
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class RequestService {
+
+    private static TextArea text=new TextArea();
+
     public static void promptChoice(){
         Stage window=new Stage();
 
@@ -33,7 +38,6 @@ public class RequestService {
 
     private static void consultScene(Stage window){
         Label label=new Label("Descrieti simptomele dumneavoastra in caseta text de mai jos");
-        TextArea text=new TextArea();
         Button submit=new Button("Submit");
 
         text.setMinHeight(100);
@@ -58,6 +62,16 @@ public class RequestService {
 
     private static void cereConsultatie() throws IOException {
         Main.updateUsers();
-
+        String txt=text.getText();
+        for (JsonUser user:SignUp.obj){
+            if(user.getUsername().equals(MainPacient.selectedDoctor)){
+                String filename = "Users/" + user.getUsername() + ".json";
+                FileWriter file = new FileWriter(filename);
+                JSONObject jsonObject = MainPacient.parseJSONFile(filename);
+                jsonObject.put("Cerere")
+                /*file.write(txt);
+                file.flush();*/
+            }
+        }
     }
 }

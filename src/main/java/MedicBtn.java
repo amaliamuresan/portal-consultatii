@@ -145,6 +145,7 @@ public class MedicBtn extends Button {
 
                 if(ok == 1)
                 {
+                    LogIn.loggedUser=new JsonUser(userTF.getText(),passwordTF.getText(),"Medic");
                     MedicMainPage.Init(Main.window);
                 }
             }

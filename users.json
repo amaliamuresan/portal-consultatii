@@ -50,4 +50,12 @@
   "username" : "p2",
   "password" : "1d665b9b1467944c128a5575119d1cfd",
   "role" : "Pacient"
+}, {
+  "username" : "pacient",
+  "password" : "8287458823facb8ff918dbfabcd22ccb",
+  "role" : "Pacient"
+}, {
+  "username" : "medic",
+  "password" : "1a1dc91c907325c69271ddf0c944bc72",
+  "role" : "Medic"
 } ]

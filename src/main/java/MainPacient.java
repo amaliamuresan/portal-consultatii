@@ -32,6 +32,7 @@ public class MainPacient {
     private Stage window;
     static ListView<String> listView=new ListView<>();
     static GridPane gridLayout = new GridPane();
+    public static String selectedDoctor;
 
     /*public static void main(String[] args) throws IOException {
 
@@ -97,8 +98,10 @@ public class MainPacient {
                 Label label = new Label("Selectati un medic, apoi faceti o cerere!!!");
                 gridLayout.add(label, 1, 3);
             }
-            else
+            else {
+                selectedDoctor=listView.getSelectionModel().getSelectedItem();
                 RequestService.promptChoice();
+            }
         });
 
         filtreazaBtn.setOnAction( e -> {

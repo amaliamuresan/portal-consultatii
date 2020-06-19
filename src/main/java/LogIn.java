@@ -20,6 +20,8 @@ public class LogIn {
 
     static Button logIn;
     static Alert alert;
+
+    public static JsonUser loggedUser;
     /*public static void main(String[] args) {
 
         launch(args);
@@ -73,25 +75,16 @@ public class LogIn {
                             alert.show();
                         else {
                             try {
-
-                                if(AdminService.returnRole(usernameTF.getText()).equals("Medic"))
-                                {
-                                    MedicMainPage.Init(window);
-                                }
-                                else
-                                {
                                     if(AdminService.returnRole(usernameTF.getText()).equals("Medic"))
                                     {
+                                        loggedUser=new JsonUser(usernameTF.getText(),passwordTF.getText(),"Medic");
                                         MedicMainPage.Init(Main.window);
                                     }
                                     else
                                         {
+                                            loggedUser=new JsonUser(usernameTF.getText(),passwordTF.getText(),"Pacient");
                                             MainPacient.init(Main.window);
-
                                     }
-                                }
-
-
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
