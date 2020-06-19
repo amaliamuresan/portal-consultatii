@@ -114,8 +114,14 @@ public class RequestService {
         });
     }
 
-    private static void anuleazaCererea(String numeMedic)
-    {
+    private static void anuleazaCererea(String numeMedic, JsonUser user, String cerere) throws IOException {
+
+        String patientUser = LogIn.loggedUser.getUsername();
+        String filename = "Users/" + user.getUsername() + ".json";
+        JSONObject jsonObject= MainPacient.parseJSONFile(filename);
+        JSONObject cere= new JSONObject();
+
+
 
     }
 }

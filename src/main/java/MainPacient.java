@@ -19,10 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
@@ -179,7 +176,6 @@ public class MainPacient {
         Button mainpg,anuleaza, raspunsuriBtn;
         mainpg=new Button("Pagina Principala");
         anuleaza= new Button("Anuleaza cerere");
-        raspunsuriBtn = new Button("Raspunsuri");
 
         mainpg.setPrefWidth(140);
         anuleaza.setPrefWidth(140);
@@ -191,7 +187,7 @@ public class MainPacient {
         gridLayout.setVgap(7);
         gridLayout.setHgap(1);
 
-        ListView<String> listView=new ListView<>();
+        ListView<String> listView = new ListView<>();
         MainPacient.addCererileMele(listView);
 
         gridLayout.getChildren().addAll(mainpg, cere,listView,anuleaza);
@@ -200,13 +196,97 @@ public class MainPacient {
         gridLayout.setConstraints(cere, 1, 0);
         gridLayout.setConstraints(listView,1,1);
         gridLayout.setConstraints(anuleaza,1,2);
-        gridLayout.setConstraints(raspunsuriBtn, 0, 1);
 
         gridLayout.setHgap(10);
 
         mainpg.setOnAction(e->w.setScene(sceneMain));
 
         Scene scenaCereri = new Scene(gridLayout, 500, 350);
+
+        anuleaza.setOnAction(e ->
+        {
+            if(listView.getSelectionModel().isEmpty()) {
+                Label label = new Label("Selectati o cerere de anulat!");
+                gridLayout.add(label, 1, 3);
+            }
+            else {
+
+                int nr_cerere = listView.getSelectionModel().getSelectedIndex();
+                String str_cerere[] = listView.getSelectionModel().getSelectedItem().split(" -> ");
+                //System.out.println(str_cerere[0] + str_cerere[1]);
+                String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
+                String filenameDoctor = "Users/" + str_cerere[0]  + ".json";
+                JSONObject jsonObject = null;
+                JSONObject jsonObjectDoctor = null;
+                try {
+                    jsonObject = MainPacient.parseJSONFile(filename);
+                    jsonObjectDoctor = MainPacient.parseJSONFile(filenameDoctor);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                JSONArray cereri = jsonObject.getJSONArray("Cereri");
+                JSONArray cereriDoctor = jsonObjectDoctor.getJSONArray("Cereri");
+                System.out.println(cereri.getJSONObject(nr_cerere).toString());
+                //cereri.getJSONObject(nr_cerere).remove(str_cerere[0]);
+                cereri.remove(nr_cerere);
+                for(int i = 0; i < cereriDoctor.length(); i++)
+                {
+                    System.out.println(cereriDoctor.getJSONObject(i).toString());
+                    if(cereriDoctor.getJSONObject(i).toString().equals(LogIn.loggedUser.getUsername()))
+                    {
+
+                        cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
+                        cereriDoctor.remove(i);
+                    }
+                }
+                //jsonObject.get("Cereri");
+
+                jsonObject.remove("Cereri");
+                if(cereri.length() > 0)
+                {
+                    jsonObject.put("Cereri", cereri);
+                }
+                else
+                {
+                    JSONArray ar = new JSONArray();
+                    jsonObject.put("Cereri", ar);
+                }
+
+                if(cereri.length() > 0)
+                {
+                    jsonObjectDoctor.put("Cereri", cereriDoctor);
+                }
+                else
+                {
+                    JSONArray ar = new JSONArray();
+                    jsonObjectDoctor.put("Cereri", ar);
+                }
+                //jsonObject.put("Cereri", cereri);
+
+                FileWriter filDoc = null;
+                FileWriter fil = null;
+                try {
+                    fil = new FileWriter("Users/" + LogIn.loggedUser.getUsername() + ".json");
+                    filDoc = new FileWriter("Users/" + str_cerere[0] + ".json");
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    fil.write(jsonObject.toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    fil.flush();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+
+            }
+
+        });
         return scenaCereri;
     }
 
