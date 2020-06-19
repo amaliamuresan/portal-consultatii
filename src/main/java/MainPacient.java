@@ -53,13 +53,17 @@ public class MainPacient {
         filtreazaBtn = new Button("Filtreaza");
         Button okBtn = new Button("OK");
         TextField specialtyTF = new TextField();
+        raspunsuriBtn = new Button("Raspunsuri");
+
         specialtyTF.setPromptText("Alegeti specializarea");
 
         raspunsuriBtn = new Button("Raspunsuri");
 
-        mainpg.setPrefWidth(140);
+        mainpg.setPrefWidth(130);
         cereri.setPrefWidth(130);
         solicita.setPrefWidth(130);
+        raspunsuriBtn.setPrefWidth(130);
+        filtreazaBtn.setPrefWidth(130);
 
         Label medici=new Label("Medici disponibili:");
 
@@ -67,7 +71,7 @@ public class MainPacient {
         gridLayout.setVgap(7);
         gridLayout.setHgap(1);
 
-
+        gridLayout.setAlignment(Pos.CENTER_LEFT);
 
         MainPacient.addNumeMedici(listView);
 
@@ -219,12 +223,23 @@ public class MainPacient {
             }
             else {
 
-                int nr_cerere = listView.getSelectionModel().getSelectedIndex();
+                ListView listCopy = new ListView();
+
+
+                    int nr_cerere = listView.getSelectionModel().getSelectedIndex();
+
+
+
 
                 String str_cerere[] = listView.getSelectionModel().getSelectedItem().split(" -> ");
+                listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
+                listView.refresh();
+
                 //System.out.println(str_cerere[0] + str_cerere[1]);
                 String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
-                String filenameDoctor = "Users/" + str_cerere[0]  + ".json";
+                String filenameDoctor = "Users/" + str_cerere[0].trim()  + ".json";
+                System.out.println(str_cerere[0]);
+
                 JSONObject jsonObject = null;
                 JSONObject jsonObjectDoctor = null;
                 try {
@@ -239,23 +254,31 @@ public class MainPacient {
                     return;
                 //System.out.println(cereri.getJSONObject(nr_cerere).toString() + "pacient");
                 //cereri.getJSONObject(nr_cerere).remove(str_cerere[0]);
-                cereri.remove(nr_cerere);
+                //cereri.remove(nr_cerere);
+
                 for(int i = 0; i < cereriDoctor.length(); i++)
                 {
-                    System.out.println(cereriDoctor.getJSONObject(i).toString());
-                    if(cereriDoctor.getJSONObject(i).toString().equals(LogIn.loggedUser.getUsername()))
+                    //System.out.println(LogIn.loggedUser.getUsername() + "1");
+                    //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()) + "  -- " + cereri.getJSONObject(nr_cerere).get(str_cerere[0]));
+                    //cereriDoctor.getJSONObject(i).keys();
+                    //System.out.println(cereriDoctor.getJSONObject(i).names().getString(0));
+                    if((cereriDoctor.getJSONObject(i).names().getString(0)).equals(LogIn.loggedUser.getUsername()));
                     {
+                        //System.out.println(LogIn.loggedUser.getUsername() +  "2");
 
                         System.out.println(cereriDoctor.getJSONObject(i).toString() + "doctor");
                         //cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
                         cereriDoctor.remove(i);
+
                     }
                 }
+
+                cereri.remove(nr_cerere);
 
 
 
                 //jsonObject.get("Cereri");
-
+                jsonObjectDoctor.remove("Cereri");
                 jsonObject.remove("Cereri");
                 if(cereri.length() > 0)
                 {
@@ -283,7 +306,7 @@ public class MainPacient {
                 FileWriter fil = null;
                 try {
                     fil = new FileWriter("Users/" + LogIn.loggedUser.getUsername() + ".json");
-                    filDoc = new FileWriter("Users/" + str_cerere[0] + ".json");
+                    filDoc = new FileWriter("Users/" + str_cerere[0].trim() + ".json");
 
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -305,7 +328,11 @@ public class MainPacient {
 
             }
 
-            MainPacient.addCererileMele(listView);
+            //MainPacient.addCererileMele(listView);
+            gridLayout.getChildren().remove(listView);
+            gridLayout.getChildren().add(listView);
+            gridLayout.setConstraints(listView, 1, 1);
+
             listView.refresh();
 
         });

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -31,6 +32,9 @@ public class MedicMainPage{
         Button myPatientsBtn = new Button("Pacienti internati");
         Button updatePriceBtn = new Button("Actualizeaza preturi");
         Button suspendActivityB = new Button();
+        Button raspundeBtn = new Button("Raspunde");
+
+        ListView lvCereri = new ListView();
 
 
 
@@ -72,7 +76,7 @@ public class MedicMainPage{
             exp.printStackTrace();
         }
         vb.getChildren().addAll(suspendActivityB, updatePriceBtn, myPatientsBtn);
-        vb2.getChildren().addAll(requestLabel);
+        vb2.getChildren().addAll(requestLabel, lvCereri, raspundeBtn);
 
         gridLayout.setConstraints(vb, 0, 0);
         gridLayout.setConstraints(vb2, 1, 0);

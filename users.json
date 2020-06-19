@@ -15,11 +15,27 @@
   "password" : "93a7ffba27902537651fb3dbca8ae802",
   "role" : "Pacient"
 }, {
-  "username" : "medic",
-  "password" : "0d20326e6155cae6bb2b510bfc2cc01e",
-  "role" : "Medic"
-}, {
   "username" : "medic2",
   "password" : "54df8e7e0aac22da2123ed1af89ce85f",
   "role" : "Medic"
+}, {
+  "username" : "pacient4",
+  "password" : "8287458823facb8ff918dbfabcd22ccb",
+  "role" : "Pacient"
+}, {
+  "username" : "daw",
+  "password" : "d1b46720b256ff6a478a806acc251047",
+  "role" : "Medic"
+}, {
+  "username" : "ADW",
+  "password" : "b1b54ce7393c62b6765adae3f535329a",
+  "role" : "Pacient"
+}, {
+  "username" : "m",
+  "password" : "6f8f57715090da2632453988d9a1501b",
+  "role" : "Medic"
+}, {
+  "username" : "p1",
+  "password" : "ec6ef230f1828039ee794566b9c58adc",
+  "role" : "Pacient"
 } ]
