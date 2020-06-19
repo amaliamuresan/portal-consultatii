@@ -212,6 +212,7 @@ public class MainPacient {
             else {
 
                 int nr_cerere = listView.getSelectionModel().getSelectedIndex();
+
                 String str_cerere[] = listView.getSelectionModel().getSelectedItem().split(" -> ");
                 //System.out.println(str_cerere[0] + str_cerere[1]);
                 String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
@@ -226,7 +227,9 @@ public class MainPacient {
                 }
                 JSONArray cereri = jsonObject.getJSONArray("Cereri");
                 JSONArray cereriDoctor = jsonObjectDoctor.getJSONArray("Cereri");
-                System.out.println(cereri.getJSONObject(nr_cerere).toString());
+                if(cereri == null ||cereriDoctor == null)
+                    return;
+                //System.out.println(cereri.getJSONObject(nr_cerere).toString() + "pacient");
                 //cereri.getJSONObject(nr_cerere).remove(str_cerere[0]);
                 cereri.remove(nr_cerere);
                 for(int i = 0; i < cereriDoctor.length(); i++)
@@ -235,10 +238,14 @@ public class MainPacient {
                     if(cereriDoctor.getJSONObject(i).toString().equals(LogIn.loggedUser.getUsername()))
                     {
 
-                        cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
+                        System.out.println(cereriDoctor.getJSONObject(i).toString() + "doctor");
+                        //cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
                         cereriDoctor.remove(i);
                     }
                 }
+
+
+
                 //jsonObject.get("Cereri");
 
                 jsonObject.remove("Cereri");
@@ -263,6 +270,7 @@ public class MainPacient {
                 }
                 //jsonObject.put("Cereri", cereri);
 
+
                 FileWriter filDoc = null;
                 FileWriter fil = null;
                 try {
@@ -274,17 +282,23 @@ public class MainPacient {
                 }
                 try {
                     fil.write(jsonObject.toString());
+                    filDoc.write(jsonObjectDoctor.toString());
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
                 try {
                     fil.flush();
+                    filDoc.flush();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
 
 
+
             }
+
+            MainPacient.addCererileMele(listView);
+            listView.refresh();
 
         });
         return scenaCereri;
