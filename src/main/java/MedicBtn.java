@@ -1,4 +1,4 @@
-import Medic.MedicMainPage;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.Node;
@@ -114,6 +114,7 @@ public class MedicBtn extends Button {
                             }
                             ArrayList<JSONObject> cereri=new ArrayList<>();
                             userJsn.put("Cereri",cereri);
+                            userJsn.put("Activitate", 1);
                             ok = 1;
 
                             //MedicMainPage.Init(SignUp.window);

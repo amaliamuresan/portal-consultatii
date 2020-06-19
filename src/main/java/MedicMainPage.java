@@ -1,4 +1,4 @@
-package Medic;
+
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -10,6 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.json.JSONObject;
+
+import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import static javafx.application.Application.launch;
 
@@ -27,7 +32,8 @@ public class MedicMainPage{
         Label requestLabel = new Label("Lista cereri:");
         Button myPatientsBtn = new Button("Pacienti internati");
         Button updatePriceBtn = new Button("Actualizeaza preturi");
-        CheckBox suspendActivityCB = new CheckBox("Suspenda Activitatea");
+        Button suspendActivityB = new Button();
+
 
 
         window.setTitle("Main Page");
@@ -55,7 +61,19 @@ public class MedicMainPage{
         vb2.setPadding(new Insets(10, 10, 10, 10));
         vb.setPadding(new Insets(10, 10, 10, 10));
 
-        vb.getChildren().addAll(suspendActivityCB, updatePriceBtn, myPatientsBtn);
+        String filename = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+        try {
+            JSONObject jsonObject = MainPacient.parseJSONFile(filename);
+            if((int)jsonObject.get("Activitate") == 1) {
+                suspendActivityB.setText("Suspenda Activitatea");
+            }else {
+                suspendActivityB.setText("Reia Activitatea");
+            }
+
+        }catch(IOException exp){
+            exp.printStackTrace();
+        }
+        vb.getChildren().addAll(suspendActivityB, updatePriceBtn, myPatientsBtn);
         vb2.getChildren().addAll(requestLabel);
 
         gridLayout.setConstraints(vb, 0, 0);
@@ -65,6 +83,31 @@ public class MedicMainPage{
 
         Scene sceneMain = new Scene(gridLayout, 450, 300);
         window.setScene(sceneMain);
+
+        suspendActivityB.setOnAction(e-> {
+
+            String fname = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+             try {
+                 JSONObject jsonObject = MainPacient.parseJSONFile(fname);
+                 if(suspendActivityB.getText().equals("Suspenda Activitatea")){
+                 jsonObject.remove("Activitate");
+                 jsonObject.put("Activitate", 0);
+                 suspendActivityB.setText("Reia Activitatea");
+                 }
+                 else {
+                     jsonObject.remove("Activitate");
+                     jsonObject.put("Activitate", 1);
+                     suspendActivityB.setText("Suspenda Activitatea");
+                 }
+                 FileWriter file = new FileWriter(fname);
+                 file.write(jsonObject.toString());
+                 file.flush();
+             }catch(IOException exep){
+                 exep.printStackTrace();
+             }
+        });
+
+        updatePriceBtn.setOnAction(e-> UpdatePrice.startUpdatePrice(window));
 
 
         //window.show();
