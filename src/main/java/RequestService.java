@@ -114,8 +114,5 @@ public class RequestService {
         });
     }
 
-    private static void anuleazaCererea(String numeMedic)
-    {
 
-    }
 }

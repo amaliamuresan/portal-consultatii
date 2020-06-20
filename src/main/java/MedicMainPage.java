@@ -1,12 +1,14 @@
 
 
-import javafx.application.Application;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -16,16 +18,16 @@ import java.awt.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static javafx.application.Application.launch;
-
 public class MedicMainPage{
 
 
     public static Stage window;
+    public static String numePacient;
+    public static String cererePacient;
 
 
     //@Override
-    public static void Init(Stage window) {
+    public static void Init(Stage window) throws IOException {
 
 
 
@@ -33,6 +35,9 @@ public class MedicMainPage{
         Button myPatientsBtn = new Button("Pacienti internati");
         Button updatePriceBtn = new Button("Actualizeaza preturi");
         Button suspendActivityB = new Button();
+        Button raspundeBtn = new Button("Raspunde");
+
+        ListView lvCereri = new ListView();
 
 
 
@@ -46,7 +51,7 @@ public class MedicMainPage{
         gridLayout.setVgap(7);
         gridLayout.setHgap(1);
 
-        VBox vb = new VBox();
+       /* VBox vb = new VBox();
         VBox vb2 = new VBox();
 
         vb2.setPrefWidth(180);
@@ -59,7 +64,9 @@ public class MedicMainPage{
         vb.setSpacing(7);
 
         vb2.setPadding(new Insets(10, 10, 10, 10));
-        vb.setPadding(new Insets(10, 10, 10, 10));
+        vb.setPadding(new Insets(10, 10, 10, 10));*/
+
+
 
         String filename = "Users/" + LogIn.loggedUser.getUsername() + ".json";
         try {
@@ -73,13 +80,64 @@ public class MedicMainPage{
         }catch(IOException exp){
             exp.printStackTrace();
         }
-        vb.getChildren().addAll(suspendActivityB, updatePriceBtn, myPatientsBtn);
-        vb2.getChildren().addAll(requestLabel);
 
-        gridLayout.setConstraints(vb, 0, 0);
-        gridLayout.setConstraints(vb2, 1, 0);
+        ExecuteService.addCereriLista(lvCereri);
 
-        gridLayout.getChildren().addAll(vb2, vb);
+
+        raspundeBtn.setOnAction(e -> {
+            if(lvCereri.getSelectionModel().isEmpty())
+            {
+                Label label = new Label("Selectati o cerere apoi raspundeti!");
+                gridLayout.add(label, 1, 4);
+            }
+            else
+            {
+                String nume_str[]  = lvCereri.getSelectionModel().getSelectedItem().toString().split(" -> ");
+                numePacient = nume_str[0];
+                cererePacient = nume_str[1];
+
+                try {
+                    ExecuteService.init();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+
+
+        });
+
+
+
+        gridLayout.setConstraints(suspendActivityB, 0, 0);
+        gridLayout.setConstraints(updatePriceBtn, 0, 1);
+        gridLayout.setConstraints(myPatientsBtn, 0, 3);
+        gridLayout.setConstraints(requestLabel, 1, 0);
+        gridLayout.setConstraints(lvCereri, 1, 1);
+        gridLayout.setConstraints(raspundeBtn, 1, 3);
+
+        gridLayout.setPadding(new Insets(15, 15, 15, 15));
+
+
+
+        gridLayout.setHgap(10);
+        String filenameType = "users/" + LogIn.loggedUser.getUsername() + ".json";
+        JSONObject jsonObjectType = MainPacient.parseJSONFile(filenameType);
+        if(jsonObjectType.get("tip_serviciu").toString().equals("privat"))
+        {
+            gridLayout.getChildren().addAll(suspendActivityB, updatePriceBtn, myPatientsBtn,requestLabel, lvCereri, raspundeBtn);
+        }
+        else
+        {
+            gridLayout.getChildren().addAll(suspendActivityB, myPatientsBtn,requestLabel, lvCereri, raspundeBtn);
+        }
+
+        //gridLayout.getChildren().addAll(suspendActivityB, updatePriceBtn, myPatientsBtn,requestLabel, lvCereri, raspundeBtn);
+        gridLayout.setAlignment(Pos.CENTER_LEFT);
+        gridLayout.setValignment(lvCereri, VPos.TOP);
+        gridLayout.setValignment(updatePriceBtn, VPos.TOP);
+
+
+
 
         Scene sceneMain = new Scene(gridLayout, 450, 300);
         window.setScene(sceneMain);

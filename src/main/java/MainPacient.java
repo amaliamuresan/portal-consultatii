@@ -12,6 +12,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import jdk.nashorn.internal.parser.JSONParser;
@@ -19,10 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
@@ -56,13 +55,16 @@ public class MainPacient {
         filtreazaBtn = new Button("Filtreaza");
         Button okBtn = new Button("OK");
         TextField specialtyTF = new TextField();
+
         specialtyTF.setPromptText("Alegeti specializarea");
 
         raspunsuriBtn = new Button("Raspunsuri");
 
-        mainpg.setPrefWidth(140);
+        mainpg.setPrefWidth(130);
         cereri.setPrefWidth(130);
         solicita.setPrefWidth(130);
+        raspunsuriBtn.setPrefWidth(130);
+        filtreazaBtn.setPrefWidth(130);
 
         Label medici=new Label("Medici disponibili:");
 
@@ -70,7 +72,7 @@ public class MainPacient {
         gridLayout.setVgap(7);
         gridLayout.setHgap(1);
 
-
+        gridLayout.setAlignment(Pos.CENTER_LEFT);
 
         MainPacient.addNumeMedici(listView);
 
@@ -96,6 +98,7 @@ public class MainPacient {
         window.show();
         //MainPacient.filterMedici("s2");
 
+        raspunsuriBtn.setOnAction((e->window.setScene(MainPacient.cereriWindow(sceneMain,window))));
         mainpg.setOnAction(e->window.setScene(sceneMain));
         cereri.setOnAction((e->window.setScene(MainPacient.makeScenaCereri(sceneMain,window))));
         solicita.setOnAction(e->{
@@ -108,6 +111,8 @@ public class MainPacient {
                 RequestService.promptChoice();
             }
         });
+
+
 
         filtreazaBtn.setOnAction( e -> {
             HBox hb = new HBox(10);
@@ -153,6 +158,12 @@ public class MainPacient {
 
     private static void filterMedici(String spec) throws IOException {
         //ListView<String> filtredList = new ListView<>();
+        if(spec.equals("") || spec == null)
+        {
+            listView.getItems().clear();
+            MainPacient.addNumeMedici(listView);
+            return;
+        }
         listView.getItems().clear();
         for (JsonUser user: SignUp.obj)
             if (user.getRole().equals("Medic")) {
@@ -167,13 +178,6 @@ public class MainPacient {
 
             }
 
-        //listView = filtredList;
-           // listView.refresh();
-        //listView.getItems().clear();
-
-        //gridLayout.setConstraints(filtredList,1,1);
-
-
 
 
     }
@@ -187,7 +191,6 @@ public class MainPacient {
         Button mainpg,anuleaza, raspunsuriBtn;
         mainpg=new Button("Pagina Principala");
         anuleaza= new Button("Anuleaza cerere");
-        raspunsuriBtn = new Button("Raspunsuri");
 
         mainpg.setPrefWidth(140);
         anuleaza.setPrefWidth(140);
@@ -199,7 +202,7 @@ public class MainPacient {
         gridLayout.setVgap(7);
         gridLayout.setHgap(1);
 
-        ListView<String> listView=new ListView<>();
+        ListView<String> listView = new ListView<>();
         MainPacient.addCererileMele(listView);
 
         gridLayout.getChildren().addAll(mainpg, cere,listView,anuleaza);
@@ -208,13 +211,135 @@ public class MainPacient {
         gridLayout.setConstraints(cere, 1, 0);
         gridLayout.setConstraints(listView,1,1);
         gridLayout.setConstraints(anuleaza,1,2);
-        gridLayout.setConstraints(raspunsuriBtn, 0, 1);
 
         gridLayout.setHgap(10);
 
         mainpg.setOnAction(e->w.setScene(sceneMain));
 
         Scene scenaCereri = new Scene(gridLayout, 500, 350);
+
+        anuleaza.setOnAction(e ->
+        {
+            if(listView.getSelectionModel().isEmpty()) {
+                Label label = new Label("Selectati o cerere de anulat!");
+                gridLayout.add(label, 1, 3);
+            }
+            else {
+
+                    int nr_cerere = listView.getSelectionModel().getSelectedIndex();
+
+
+
+
+                String str_cerere[] = listView.getSelectionModel().getSelectedItem().split(" -> ");
+                listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
+                listView.refresh();
+
+                //System.out.println(str_cerere[0] + str_cerere[1]);
+                String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
+                String filenameDoctor = "Users/" + str_cerere[0].trim()  + ".json";
+                System.out.println(str_cerere[0]);
+
+                JSONObject jsonObject = null;
+                JSONObject jsonObjectDoctor = null;
+                try {
+                    jsonObject = MainPacient.parseJSONFile(filename);
+                    jsonObjectDoctor = MainPacient.parseJSONFile(filenameDoctor);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                JSONArray cereri = jsonObject.getJSONArray("Cereri");
+                JSONArray cereriDoctor = jsonObjectDoctor.getJSONArray("Cereri");
+                if(cereri == null ||cereriDoctor == null)
+                    return;
+                //System.out.println(cereri.getJSONObject(nr_cerere).toString() + "pacient");
+                //cereri.getJSONObject(nr_cerere).remove(str_cerere[0]);
+                //cereri.remove(nr_cerere);
+
+                for(int i = 0; i < cereriDoctor.length(); i++)
+                {
+                    //System.out.println(LogIn.loggedUser.getUsername() + "1");
+                    //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()) + "  -- " + cereri.getJSONObject(nr_cerere).get(str_cerere[0]));
+
+                    //System.out.println(cereriDoctor.getJSONObject(i).names().getString(0));
+                    if((cereriDoctor.getJSONObject(i).names().getString(0)).equals(LogIn.loggedUser.getUsername()));
+                    {
+                        System.out.println(cereriDoctor.getJSONObject(i).toString() + "1");
+                        System.out.println(cereri.getJSONObject(nr_cerere).get(str_cerere[0]) + "2");
+                        //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername() + " --" + cereri.get(nr_cerere)));
+                        if(((cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()).equals(cereri.getJSONObject(nr_cerere).get(str_cerere[0])))))
+                        {
+                            System.out.println(cereriDoctor.getJSONObject(i).toString() + "doctor");
+                            //cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
+                            cereriDoctor.remove(i);
+                        }
+
+                    }
+                }
+
+                cereri.remove(nr_cerere);
+
+
+
+                //jsonObject.get("Cereri");
+                jsonObjectDoctor.remove("Cereri");
+                jsonObject.remove("Cereri");
+                if(cereri.length() > 0)
+                {
+                    jsonObject.put("Cereri", cereri);
+                }
+                else
+                {
+                    JSONArray ar = new JSONArray();
+                    jsonObject.put("Cereri", ar);
+                }
+
+                if(cereri.length() > 0)
+                {
+                    jsonObjectDoctor.put("Cereri", cereriDoctor);
+                }
+                else
+                {
+                    JSONArray ar = new JSONArray();
+                    jsonObjectDoctor.put("Cereri", ar);
+                }
+                //jsonObject.put("Cereri", cereri);
+
+
+                FileWriter filDoc = null;
+                FileWriter fil = null;
+                try {
+                    fil = new FileWriter("Users/" + LogIn.loggedUser.getUsername() + ".json");
+                    filDoc = new FileWriter("Users/" + str_cerere[0].trim() + ".json");
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    fil.write(jsonObject.toString());
+                    filDoc.write(jsonObjectDoctor.toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    fil.flush();
+                    filDoc.flush();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+
+
+            }
+
+            //MainPacient.addCererileMele(listView);
+            gridLayout.getChildren().remove(listView);
+            gridLayout.getChildren().add(listView);
+            gridLayout.setConstraints(listView, 1, 1);
+
+            listView.refresh();
+
+        });
         return scenaCereri;
     }
 
@@ -243,5 +368,210 @@ public class MainPacient {
                 }
             }
     }
+
+    public static Scene cereriWindow(Scene sceneMain, Stage window)
+    {
+        //Stage window = new Stage();
+        //window.initModality(Modality.APPLICATION_MODAL);
+
+        VBox vb = new VBox(15);
+
+        Button mainpgBtn =new Button("Pagina Principala");
+        Label raspunsLabel = new Label("Raspunsuri");
+        Button stergeRaspBtn = new Button("Sterge raspuns");
+        ListView lvRasp = new ListView();
+        MainPacient.addRasp(lvRasp);
+
+        stergeRaspBtn.setPrefWidth(130);
+        mainpgBtn.setPrefWidth(130);
+
+
+        vb.getChildren().addAll(raspunsLabel,lvRasp, stergeRaspBtn, mainpgBtn);
+        vb.setPadding(new Insets(10, 10, 10, 10));
+        vb.setAlignment(Pos.CENTER);
+        mainpgBtn.setOnAction(e -> window.setScene(sceneMain));
+
+        int nr_cerere = listView.getSelectionModel().getSelectedIndex();
+
+        stergeRaspBtn.setOnAction(e ->
+        {
+            if(lvRasp.getSelectionModel().isEmpty() == true)
+            {
+                Label label = new Label("Selectati un raspuns pentru a fi sters!");
+                vb.getChildren().add(label);
+            }
+            else
+            {
+                String str_rasp[] = lvRasp.getSelectionModel().getSelectedItem().toString().split(" -> ");
+                String cerereRasp = str_rasp[0];
+                String medicRasp = str_rasp[1];
+                String rasp = str_rasp[2];
+
+                String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
+                String filenameDoctor = "Users/" + medicRasp  + ".json";
+
+
+                JSONObject jsonObject = null;
+                JSONObject jsonObjectDoctor = null;
+                try {
+                    jsonObject = MainPacient.parseJSONFile(filename);
+                    jsonObjectDoctor = MainPacient.parseJSONFile(filenameDoctor);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                JSONArray cereri = jsonObject.getJSONArray("Cereri");
+                JSONArray cereriDoctor = jsonObjectDoctor.getJSONArray("Cereri");
+                if(cereri == null ||cereriDoctor == null)
+                    return;
+                //System.out.println(cereri.getJSONObject(nr_cerere).toString() + "pacient");
+                //cereri.getJSONObject(nr_cerere).remove(str_cerere[0]);
+                //cereri.remove(nr_cerere);
+
+                for(int i = 0; i < cereri.length(); i++)
+                {
+
+                    System.out.println(cereri.getJSONObject(i).get(medicRasp).toString() + " - " + cerereRasp +  " rasp");
+                    if(cereri.getJSONObject(i).get(medicRasp).toString().equals(cerereRasp))
+                    {
+                        System.out.println(cereri.getJSONObject(i).get(medicRasp).toString() + " pat");
+
+                        if(cereriDoctor.length() == 1)
+                        {
+                            JSONArray ar = new JSONArray();
+                            jsonObject.put("Cereri", ar);
+                        }
+                        else {
+                            cereri.remove(i);
+                        }
+
+                    }
+                }
+
+
+
+                for(int i = 0; i < cereriDoctor.length(); i++)
+                {
+                    //System.out.println(LogIn.loggedUser.getUsername() + "1");
+                    //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()) + "  -- " + cereri.getJSONObject(nr_cerere).get(str_cerere[0]));
+
+                    //System.out.println(cereriDoctor.getJSONObject(i).names().getString(0));
+                    if((cereriDoctor.getJSONObject(i).names().getString(0)).equals(LogIn.loggedUser.getUsername()));
+                    {
+                        System.out.println(cereriDoctor.getJSONObject(i).toString() + "1");
+                        //System.out.println(cereri.getJSONObject(nr_cerere).get(str_cerere[0]) + "2");
+                        //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername() + " --" + cereri.get(nr_cerere)));
+                        if(((cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()).equals(cerereRasp))))
+                        {
+                            System.out.println(cereriDoctor.getJSONObject(i).toString() + "doctor");
+                            //cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
+                            if(cereriDoctor.length() == 1)
+                            {
+                                JSONArray ar = new JSONArray();
+                                jsonObjectDoctor.put("Cereri", ar);
+                            }
+                            else {
+
+                                cereriDoctor.remove(i);
+
+                            }
+                        }
+
+                    }
+                }
+
+
+
+
+
+
+
+                //jsonObject.get("Cereri");
+                jsonObjectDoctor.remove("Cereri");
+                jsonObject.remove("Cereri");
+                if(cereri.length() > 0)
+                {
+                    jsonObject.put("Cereri", cereri);
+                }
+                else
+                {
+                    JSONArray ar = new JSONArray();
+                    jsonObject.put("Cereri", ar);
+                }
+
+                if(cereriDoctor.length() > 0)
+                {
+                    jsonObjectDoctor.put("Cereri", cereriDoctor);
+                }
+                else
+                {
+                    JSONArray ar = new JSONArray();
+                    jsonObjectDoctor.put("Cereri", ar);
+                }
+
+                FileWriter filDoc = null;
+                FileWriter fil = null;
+                try {
+                    fil = new FileWriter("Users/" + LogIn.loggedUser.getUsername() + ".json");
+                    filDoc = new FileWriter("Users/" + medicRasp.trim() + ".json");
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    fil.write(jsonObject.toString());
+                    filDoc.write(jsonObjectDoctor.toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    fil.flush();
+                    filDoc.flush();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+
+
+            }
+
+
+        });
+
+        Scene scenaCereri = new Scene(vb, 500, 350);
+        window.setScene(sceneMain);
+        //window.show();
+
+        return scenaCereri;
+    }
+
+    public static void addRasp(ListView<String> lv)
+    {
+        Main.updateUsers();
+        for (JsonUser user: SignUp.obj)
+            if (user.getUsername().equals(LogIn.loggedUser.getUsername())) {
+                String filename = "Users/" + user.getUsername() + ".json";
+                try {
+                    JSONObject jsonObject = MainPacient.parseJSONFile(filename);
+                    JSONArray raspunsuri = jsonObject.getJSONArray("Raspunsuri");
+                    for(int i=0;i<raspunsuri.length();i++) {
+                        String string=raspunsuri.getJSONObject(i).toString(),rasp=new String("");
+                        for(int j=0;j<string.length();j++){
+                            char c=string.charAt(j);
+                            if(c==':')
+                                rasp+=" -> ";
+                            else
+                            if(c != '{' && c!='}' && c!='"')
+                                rasp+=c;
+                        }
+                        lv.getItems().add(rasp);
+                    }
+                }catch (IOException exception){
+                    exception.printStackTrace();
+                }
+            }
+
+    }
+
+
 
 }
