@@ -232,7 +232,7 @@ public class MainPacient {
 
 
                 String str_cerere[] = listView.getSelectionModel().getSelectedItem().split(" -> ");
-                listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
+                //listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
                 listView.refresh();
 
                 //System.out.println(str_cerere[0] + str_cerere[1]);
@@ -333,9 +333,12 @@ public class MainPacient {
             }
 
             //MainPacient.addCererileMele(listView);
+
+            listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
             gridLayout.getChildren().remove(listView);
             gridLayout.getChildren().add(listView);
             gridLayout.setConstraints(listView, 1, 1);
+
 
             listView.refresh();
 
@@ -406,9 +409,18 @@ public class MainPacient {
                 String cerereRasp = str_rasp[0];
                 String medicRasp = str_rasp[1];
                 String rasp = str_rasp[2];
+                String key = cerereRasp + " -> " + medicRasp;
 
                 String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
                 String filenameDoctor = "Users/" + medicRasp  + ".json";
+
+                /*listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
+                gridLayout.getChildren().remove(listView);
+                gridLayout.getChildren().add(listView);
+                gridLayout.setConstraints(listView, 1, 1);
+                listView.refresh();*/
+
+
 
 
                 JSONObject jsonObject = null;
@@ -421,7 +433,7 @@ public class MainPacient {
                 }
                 JSONArray cereri = jsonObject.getJSONArray("Cereri");
                 JSONArray cereriDoctor = jsonObjectDoctor.getJSONArray("Cereri");
-                if(cereri == null ||cereriDoctor == null)
+                if(cereri == null || cereriDoctor == null)
                     return;
                 //System.out.println(cereri.getJSONObject(nr_cerere).toString() + "pacient");
                 //cereri.getJSONObject(nr_cerere).remove(str_cerere[0]);
@@ -430,7 +442,7 @@ public class MainPacient {
                 for(int i = 0; i < cereri.length(); i++)
                 {
 
-                    System.out.println(cereri.getJSONObject(i).get(medicRasp).toString() + " - " + cerereRasp +  " rasp");
+                    //System.out.println(cereri.getJSONObject(i).get(medicRasp).toString() + " - " + cerereRasp +  " rasp");
                     if(cereri.getJSONObject(i).get(medicRasp).toString().equals(cerereRasp))
                     {
                         System.out.println(cereri.getJSONObject(i).get(medicRasp).toString() + " pat");
@@ -530,9 +542,26 @@ public class MainPacient {
                     ioException.printStackTrace();
                 }
 
+                try {
+                    lvRasp.getItems().clear();
+                    MainPacient.stergeRaspuns(lvRasp, key, rasp);
+                    MainPacient.addRasp(lvRasp);
+
+
+
+
+                    //listView.refresh();
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
 
 
             }
+
+
+
+
 
 
         });
@@ -569,6 +598,64 @@ public class MainPacient {
                     exception.printStackTrace();
                 }
             }
+
+    }
+
+    public static void stergeRaspuns(ListView lv, String key, String val) throws IOException {
+
+
+
+        String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
+        JSONObject jsonObject;
+
+        jsonObject = MainPacient.parseJSONFile(filename);
+
+        JSONArray raspunsuri = jsonObject.getJSONArray("Raspunsuri");
+        if(raspunsuri == null)
+            return;
+        for(int i = 0; i < raspunsuri.length(); i++)
+        {
+            if(raspunsuri.getJSONObject(i).has(key) && raspunsuri.getJSONObject(i).get(key).toString().equals(val))
+            {
+                if(raspunsuri.length() == 1)
+                {
+                    JSONArray ar = new JSONArray();
+                    jsonObject.put("Raspunsuri", ar);
+                    raspunsuri.remove(i);
+                    //raspunsuri.put(new JSONObject());
+                }
+                else {
+
+                    raspunsuri.remove(i);
+
+                }
+
+                //lv.getItems().remove(lv.getSelectionModel().getSelectedItem());
+                //lv.refresh();
+
+            }
+
+            jsonObject.remove("Raspunsuri");
+            jsonObject.put("Raspunsuri", raspunsuri);
+
+
+
+
+            FileWriter fil;
+            fil = new FileWriter("Users/" + LogIn.loggedUser.getUsername() + ".json");
+            fil.write(jsonObject.toString());
+            fil.flush();
+        }
+
+        lv.getItems().remove(lv.getSelectionModel().getSelectedItem());
+
+
+
+
+        //lv.getItems().remove(lv.getSelectionModel().getSelectedItem());
+        lv.refresh();
+
+
 
     }
 

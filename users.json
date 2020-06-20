@@ -54,4 +54,16 @@
   "username" : "pac",
   "password" : "182a15b93cd323556be21fd4fe8f3a8a",
   "role" : "Pacient"
+}, {
+  "username" : "medic1",
+  "password" : "202cb962ac59075b964b07152d234b70",
+  "role" : "Medic"
+}, {
+  "username" : "pac1",
+  "password" : "c4ca4238a0b923820dcc509a6f75849b",
+  "role" : "Pacient"
+}, {
+  "username" : "pac2",
+  "password" : "c4ca4238a0b923820dcc509a6f75849b",
+  "role" : "Pacient"
 } ]
