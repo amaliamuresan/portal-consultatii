@@ -70,11 +70,11 @@ public class ExecuteService {
     }
 
     public static void trimiteRaspuns(TextArea textArea, String namePatient, String cerere,CheckBox checkBox) throws IOException {
-        String filename = "Users/" + namePatient + ".json";
+        String filename = "src/main/resources/Users/" + namePatient + ".json";
         JSONObject jsonObject= MainPacient.parseJSONFile(filename);
         JSONObject rasp= new JSONObject();
         if(checkBox.isSelected()){
-            String filedoc = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+            String filedoc = "src/main/resources/Users/" + LogIn.loggedUser.getUsername() + ".json";
             JSONObject jsonDoc= MainPacient.parseJSONFile(filedoc);
             if(jsonDoc.get("tip_serviciu").toString().equals("privat"))
                 rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText()+ " ATENTIE aveti nevoie de internare, " +
@@ -104,7 +104,7 @@ public class ExecuteService {
         Main.updateUsers();
         for (JsonUser user: SignUp.obj)
             if (user.getUsername().equals(LogIn.loggedUser.getUsername())) {
-                String filename = "Users/" + user.getUsername() + ".json";
+                String filename = "src/main/resources/Users/" + user.getUsername() + ".json";
                 try {
                     JSONObject jsonObject = MainPacient.parseJSONFile(filename);
                     JSONArray cereri = jsonObject.getJSONArray("Cereri");

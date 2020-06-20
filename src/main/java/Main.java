@@ -27,7 +27,7 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        try {
+        /*try {
             File original = new File("../users.json");
             File copied = new File("users.json");
             FileUtils.copyFile(original, copied);
@@ -37,7 +37,7 @@ public class Main extends Application{
         }
         catch(Exception e){
             e.printStackTrace();
-        }
+        }*/
         Main.updateUsers();
 
         window = primaryStage;
@@ -74,7 +74,7 @@ public class Main extends Application{
 
     public static void updateUsers(){
         ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("users.json");
+        File file = new File("src/main/resources/users.json");
         try {
             SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});
         }catch (IOException e1){

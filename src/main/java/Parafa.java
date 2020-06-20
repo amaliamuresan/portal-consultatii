@@ -31,7 +31,7 @@ public class Parafa {
 
     public static void setCoduri() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("parafe.json");
+        File file = new File("src/main/resources/parafe.json");
         Parafa.listaCoduri = objectMapper.readValue(file, new TypeReference<List<Parafa>>() {});
     }
 

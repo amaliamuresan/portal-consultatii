@@ -99,12 +99,12 @@ public class AdminService {
                 System.out.println(p.toString());
             }
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(new File("parafe.json"), Parafa.listaCoduri);
+            objectMapper.writeValue(new File("src/main/resources/parafe.json"), Parafa.listaCoduri);
         }
     }
 
 
-    public static boolean verifyUser(String username, String password) throws NoSuchAlgorithmException, IOException {
+    public static boolean verifyUser(String username, String password) throws NoSuchAlgorithmException,IOException {
 
             for (JsonUser usr : SignUp.obj) {
 

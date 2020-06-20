@@ -87,11 +87,11 @@ public class PatientBtn extends Button{
                         JsnObj.put("Cereri",cereri);
                         ArrayList<JSONObject> raspunsuri =new ArrayList<>();
                         JsnObj.put("Raspunsuri",raspunsuri);
-                        FileWriter fil  = new FileWriter("Users/" + userTF.getText() + ".json");
+                        FileWriter fil  = new FileWriter("src/main/resources/Users/" + userTF.getText() + ".json");
                         fil.write(JsnObj.toString());
                         fil.flush();
 
-                        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("users.json"), SignUp.obj);
+                        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/resources/users.json"), SignUp.obj);
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }

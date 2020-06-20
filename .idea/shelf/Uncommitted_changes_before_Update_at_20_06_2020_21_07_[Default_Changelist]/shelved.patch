@@ -1,0 +1,160 @@
+Index: src/main/java/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import com.fasterxml.jackson.core.type.TypeReference;\r\nimport com.fasterxml.jackson.databind.ObjectMapper;\r\nimport javafx.application.Application;\r\nimport javafx.geometry.Pos;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.layout.*;\r\nimport javafx.stage.Stage;\r\n\r\n\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.util.List;\r\n\r\npublic class Main extends Application{\r\n\r\n    private Button login, signup;\r\n\r\n    public static Stage window;\r\n\r\n    public static void main(String[] args) {\r\n\r\n        launch(args);\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage primaryStage) throws Exception{\r\n        Main.updateUsers();\r\n\r\n        window = primaryStage;\r\n        primaryStage.setTitle(\"Portal consultatii\");\r\n        login=new Button(\"Log In\");\r\n        signup=new Button(\"Sign Up\");\r\n        Label label=new Label(\"Daca aveti deja un cont dati click pe 'Log In', daca nu dati pe 'Sign Up' pentru a crea unul\");\r\n\r\n        login.setOnAction(e -> {\r\n            try{\r\n                LogIn.startLogIn(primaryStage);\r\n            }catch (Exception exception){\r\n                exception.printStackTrace();\r\n            }\r\n        });\r\n        signup.setOnAction(e->{\r\n            SignUp.setStage(primaryStage);\r\n            try {\r\n                SignUp.initSignUp();\r\n            } catch (IOException ioException) {\r\n                ioException.printStackTrace();\r\n            }\r\n        });\r\n\r\n        VBox layout=new VBox(20);\r\n        layout.getChildren().addAll(label,login,signup);\r\n        layout.setAlignment(Pos.CENTER);\r\n\r\n        Scene scene=new Scene(layout,650,250);\r\n        primaryStage.setScene(scene);\r\n        //System.out.println(SignUp.obj);\r\n        primaryStage.show();\r\n    }\r\n\r\n    public static void updateUsers(){\r\n        ObjectMapper objectMapper = new ObjectMapper();\r\n        File file = new File(\"users.json\");\r\n        try {\r\n            SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});\r\n        }catch (IOException e1){\r\n            e1.printStackTrace();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/Main.java	(revision 561c8ce71596ccf1684904d9e20e3947e430bca9)
++++ src/main/java/Main.java	(date 1592673709383)
+@@ -1,3 +1,4 @@
++
+ import com.fasterxml.jackson.core.type.TypeReference;
+ import com.fasterxml.jackson.databind.ObjectMapper;
+ import javafx.application.Application;
+Index: src/main/java/PatientBtn.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\nimport com.fasterxml.jackson.core.type.TypeReference;\r\nimport com.fasterxml.jackson.databind.ObjectMapper;\r\nimport javafx.scene.control.Alert;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.layout.*;\r\nimport javafx.stage.Stage;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.event.ActionEvent;\r\nimport org.json.*;\r\n\r\nimport java.io.File;\r\nimport java.io.FileWriter;\r\nimport java.io.IOException;\r\nimport java.security.NoSuchAlgorithmException;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class PatientBtn extends Button{\r\n\r\n    static String adress;\r\n    static int valid = 0;\r\n\r\n    public PatientBtn(String value)\r\n    {\r\n        super(value);\r\n    }\r\n\r\n    public void writeUserDataPatient(TextField userTF, TextField passwordTF) throws IOException {\r\n        ObjectMapper objectMapper = new ObjectMapper();\r\n        File file = new File(\"users.json\");\r\n        SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});\r\n        String Val = this.getText();\r\n        this.setOnAction(e -> {\r\n            valid = 0;\r\n            //JSONObject userJson = new JSONObject();\r\n            JsonUser userJson = new JsonUser();\r\n\r\n\r\n\r\n            // apeleaza getPatientData(adresa, stage -> ce trebuie inchis)\r\n            //AdminService parola = new AdminService();\r\n            //userJson.put(\"username\", userTF.getText());\r\n            if(userTF.getText() == null|| userTF.getText().length() == 0 || passwordTF.getText() == null || passwordTF.getText().length() ==  0 )\r\n            {\r\n                Alert alert = new Alert(Alert.AlertType.ERROR);\r\n                alert.setTitle(\"Error Dialog\");\r\n                alert.setContentText(\"Completati toate campurile!\");\r\n                alert.show();\r\n\r\n            }\r\n            else {\r\n\r\n                if (AdminService.userAlraedyExists(userTF.getText()) == true) {\r\n                    Alert alert = new Alert(Alert.AlertType.ERROR);\r\n                    alert.setTitle(\"Error Dialog\");\r\n                    alert.setContentText(\"Acest username deja exista!\");\r\n                    alert.show();\r\n                    //AdminService.userAlraedyExists(userTF.getText());\r\n\r\n                } else {\r\n                    valid = 1;\r\n                    PatientPromptedWindow.window(userTF, passwordTF);\r\n\r\n                    userJson.setUsername(userTF.getText());\r\n\r\n\r\n                    try {\r\n                        userJson.setPassword(AdminService.encrypt(passwordTF.getText()));\r\n                    } catch (NoSuchAlgorithmException noSuchAlgorithmException) {\r\n                        noSuchAlgorithmException.printStackTrace();\r\n                    }\r\n\r\n                    userJson.setRole(Val);\r\n                    //userJson.put(\"adresa:\", adress);\r\n\r\n                    SignUp.obj.add(userJson);\r\n\r\n                    //System.out.println(obj.toString());\r\n\r\n                    try {\r\n                        JSONObject JsnObj = new JSONObject();\r\n                        JsnObj.put(\"adresa\", adress);\r\n                        ArrayList<JSONObject> cereri=new ArrayList<>();\r\n                        JsnObj.put(\"Cereri\",cereri);\r\n                        ArrayList<JSONObject> raspunsuri =new ArrayList<>();\r\n                        JsnObj.put(\"Raspunsuri\",raspunsuri);\r\n                        FileWriter fil  = new FileWriter(\"Users/\" + userTF.getText() + \".json\");\r\n                        fil.write(JsnObj.toString());\r\n                        fil.flush();\r\n\r\n                        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(\"users.json\"), SignUp.obj);\r\n                    } catch (IOException ioException) {\r\n                        ioException.printStackTrace();\r\n                    }\r\n                }\r\n            }\r\n            });\r\n    }\r\n\r\n\r\n    public void  getPatientData(TextField adresaTF, Stage window,TextField userTF, TextField passwordTF)\r\n    {\r\n\r\n        this.setOnAction(e -> {\r\n            //JSONObject userJson = new JSONObject();\r\n            //JSON.put(\"adresa:\", adresaTF.getText();\r\n            adress = adresaTF.getText();\r\n\r\n            if (adress == null || adress.equals(\"\"))\r\n            {\r\n                Alert alert = new Alert(Alert.AlertType.ERROR);\r\n                alert.setTitle(\"Error Dialog\");\r\n                alert.setContentText(\"Completati toate campurile!\");\r\n                alert.show();\r\n            }\r\n            else {\r\n\r\n                if (valid == 1) {\r\n                    try {\r\n                        LogIn.loggedUser=new JsonUser(userTF.getText(),passwordTF.getText(),\"Pacient\");\r\n                        MainPacient.init(window);\r\n                        SignUp.window.close();\r\n\r\n                    } catch (Exception exception) {\r\n                        exception.printStackTrace();\r\n                    }\r\n                }\r\n            }\r\n\r\n\r\n\r\n        });\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/PatientBtn.java	(revision 561c8ce71596ccf1684904d9e20e3947e430bca9)
++++ src/main/java/PatientBtn.java	(date 1592676089358)
+@@ -87,7 +87,7 @@
+                         JsnObj.put("Cereri",cereri);
+                         ArrayList<JSONObject> raspunsuri =new ArrayList<>();
+                         JsnObj.put("Raspunsuri",raspunsuri);
+-                        FileWriter fil  = new FileWriter("Users/" + userTF.getText() + ".json");
++                        FileWriter fil  = new FileWriter("target/" + userTF.getText() + ".json");
+                         fil.write(JsnObj.toString());
+                         fil.flush();
+ 
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n\r\n\r\n    <groupId>org.example</groupId>\r\n    <artifactId>fiisProjv3</artifactId>\r\n    <version>1.0-SNAPSHOT</version>\r\n    <build>\r\n        <plugins>\r\n            <plugin>\r\n                <groupId>org.apache.maven.plugins</groupId>\r\n                <artifactId>maven-compiler-plugin</artifactId>\r\n                <configuration>\r\n                    <source>8</source>\r\n                    <target>8</target>\r\n                </configuration>\r\n            </plugin>\r\n        </plugins>\r\n\r\n\r\n    </build>\r\n\r\n    <dependencies>\r\n        <dependency>\r\n            <groupId>org.json</groupId>\r\n            <artifactId>json</artifactId>\r\n            <version>20190722</version>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>com.fasterxml.jackson.core</groupId>\r\n            <artifactId>jackson-core</artifactId>\r\n            <version>2.11.0</version>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>com.fasterxml.jackson.core</groupId>\r\n            <artifactId>jackson-annotations</artifactId>\r\n            <version>2.11.0</version>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>com.fasterxml.jackson.core</groupId>\r\n            <artifactId>jackson-databind</artifactId>\r\n            <version>2.11.0</version>\r\n        </dependency>\r\n\r\n    </dependencies>\r\n\r\n\r\n\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(revision 561c8ce71596ccf1684904d9e20e3947e430bca9)
++++ pom.xml	(date 1592674062182)
+@@ -12,16 +12,25 @@
+     <build>
+         <plugins>
+             <plugin>
++
++
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+                 <configuration>
++
+                     <source>8</source>
+                     <target>8</target>
+                 </configuration>
++
++               
++
++
+             </plugin>
+         </plugins>
+ 
+ 
++
++
+     </build>
+ 
+     <dependencies>
+Index: target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>F:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\JsonUser.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\Main.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\PatientBtn.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\MedicPromptedWindow.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\LoadUsers.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\PatientPromptedWindow.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\LogIn.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\MedicBtn.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\Parafa.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\SignUp.java\r\nF:\\facultate\\Anul2\\sem2\\FIS\\Proiect\\portal-consultatii\\src\\main\\java\\AdminService.java\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst	(revision 561c8ce71596ccf1684904d9e20e3947e430bca9)
++++ target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst	(date 1592672566985)
+@@ -1,11 +1,17 @@
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\JsonUser.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\Main.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\PatientBtn.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\MedicPromptedWindow.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\LoadUsers.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\PatientPromptedWindow.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\LogIn.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\MedicBtn.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\Parafa.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\SignUp.java
+-F:\facultate\Anul2\sem2\FIS\Proiect\portal-consultatii\src\main\java\AdminService.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\RequestService.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\MyPatients.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\PatientPromptedWindow.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\AdminService.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\LogIn.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\Main.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\PaymentWindow.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\MedicBtn.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\SignUp.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\ExecuteService.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\MedicPromptedWindow.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\MainPacient.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\UpdatePrice.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\MedicMainPage.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\Parafa.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\PatientBtn.java
++C:\Users\amali\IdeaProjects\fiisProjv3\src\main\java\JsonUser.java
+Index: users.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[ {\r\n  \"username\" : \"pacient\",\r\n  \"password\" : \"8287458823facb8ff918dbfabcd22ccb\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"pacient1\",\r\n  \"password\" : \"f63ed3300797216784db8387a2deaff0\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"pacient2\",\r\n  \"password\" : \"a1442bfc190d52303727e63719962ed6\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"pacient3\",\r\n  \"password\" : \"93a7ffba27902537651fb3dbca8ae802\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"medic2\",\r\n  \"password\" : \"54df8e7e0aac22da2123ed1af89ce85f\",\r\n  \"role\" : \"Medic\"\r\n}, {\r\n  \"username\" : \"pacient4\",\r\n  \"password\" : \"8287458823facb8ff918dbfabcd22ccb\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"daw\",\r\n  \"password\" : \"d1b46720b256ff6a478a806acc251047\",\r\n  \"role\" : \"Medic\"\r\n}, {\r\n  \"username\" : \"ADW\",\r\n  \"password\" : \"b1b54ce7393c62b6765adae3f535329a\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"m\",\r\n  \"password\" : \"6f8f57715090da2632453988d9a1501b\",\r\n  \"role\" : \"Medic\"\r\n}, {\r\n  \"username\" : \"p1\",\r\n  \"password\" : \"ec6ef230f1828039ee794566b9c58adc\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"p\",\r\n  \"password\" : \"83878c91171338902e0fe0fb97a8c47a\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"mp\",\r\n  \"password\" : \"1f2dfa567dcf95833eddf7aec167fec7\",\r\n  \"role\" : \"Medic\"\r\n}, {\r\n  \"username\" : \"doc\",\r\n  \"password\" : \"9a09b4dfda82e3e665e31092d1c3ec8d\",\r\n  \"role\" : \"Medic\"\r\n}, {\r\n  \"username\" : \"pac\",\r\n  \"password\" : \"182a15b93cd323556be21fd4fe8f3a8a\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"doc1\",\r\n  \"password\" : \"83e4b1789306d3d1c99140df3827d600\",\r\n  \"role\" : \"Medic\"\r\n}, {\r\n  \"username\" : \"pacA\",\r\n  \"password\" : \"c4ca4238a0b923820dcc509a6f75849b\",\r\n  \"role\" : \"Pacient\"\r\n}, {\r\n  \"username\" : \"docA\",\r\n  \"password\" : \"c4ca4238a0b923820dcc509a6f75849b\",\r\n  \"role\" : \"Medic\"\r\n} ]
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- users.json	(revision 561c8ce71596ccf1684904d9e20e3947e430bca9)
++++ users.json	(date 1592676058605)
+@@ -66,4 +66,12 @@
+   "username" : "docA",
+   "password" : "c4ca4238a0b923820dcc509a6f75849b",
+   "role" : "Medic"
++}, {
++  "username" : "pc1",
++  "password" : "bc54f4d60f1cec0f9a6cb70e13f2127a",
++  "role" : "Pacient"
++}, {
++  "username" : "dd",
++  "password" : "1f2121f36f817bd18540e5fa7de06f59",
++  "role" : "Pacient"
+ } ]
+\ No newline at end of file
+Index: target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>Parafa.class\r\nPatientPromptedWindow.class\r\nMedicBtn$1.class\r\nLoadUsers.class\r\nMain.class\r\nPatientBtn$1.class\r\nPatientBtn.class\r\nJsonUser.class\r\nMedicPromptedWindow.class\r\nParafa$1.class\r\nAdminService.class\r\nLogIn.class\r\nMedicBtn.class\r\nSignUp.class\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst	(revision 561c8ce71596ccf1684904d9e20e3947e430bca9)
++++ target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst	(date 1592672561222)
+@@ -1,14 +1,21 @@
+ Parafa.class
+ PatientPromptedWindow.class
+ MedicBtn$1.class
+-LoadUsers.class
++RequestService.class
++PaymentWindow.class
++Main$1.class
+ Main.class
+ PatientBtn$1.class
++MyPatients.class
++MainPacient.class
+ PatientBtn.class
+ JsonUser.class
+ MedicPromptedWindow.class
+ Parafa$1.class
++UpdatePrice.class
+ AdminService.class
+ LogIn.class
+ MedicBtn.class
+ SignUp.class
++ExecuteService.class
++MedicMainPage.class
