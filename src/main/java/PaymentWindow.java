@@ -35,26 +35,26 @@ public class PaymentWindow {
         Label cvvLabel = new Label("CVV:");
         Label dataExpLabel = new Label("Data Expirarii:");
         Label anuntLabel = new Label("Aveti de achitat contravaloarea serviciilor.");
-        Label anuntbLabel = new Label("Redirectionarea catre pagina principala reprezinta efectuarea cu succes a platii");
+        Label anuntbLabel = new Label("Inchiderea ferestrei reprezinta efectuarea cu succes a platii");
         TextField numarCardTF = new TextField();
         TextField cvvTF = new TextField();
         TextField dataExpTF = new TextField();
 
-        gridLayout.setConstraints(numarCardLabel, 0, 2 );
-        gridLayout.setConstraints(cvvLabel, 0, 3);
-        gridLayout.setConstraints(dataExpLabel,0,4);
-        gridLayout.setConstraints(anuntLabel,0,1);
-        gridLayout.setConstraints(anuntbLabel,0,5);
-        gridLayout.setConstraints(numarCardTF, 1 , 2);
-        gridLayout.setConstraints(cvvLabel, 1, 3 );
-        gridLayout.setConstraints(dataExpTF,1,4);
-        gridLayout.setConstraints(saveB,1,5);
+        gridLayout.setConstraints(numarCardLabel, 0, 1 );
+        gridLayout.setConstraints(cvvLabel, 0, 2);
+        gridLayout.setConstraints(dataExpLabel,0,3);
+        gridLayout.setConstraints(anuntLabel,0,0);
+        gridLayout.setConstraints(anuntbLabel,0,4);
+        gridLayout.setConstraints(numarCardTF, 1 , 1);
+        gridLayout.setConstraints(cvvTF, 1, 2 );
+        gridLayout.setConstraints(dataExpTF,1,3);
+        gridLayout.setConstraints(saveB,1,4);
 
         VBox layout=new VBox(20);
         gridLayout.getChildren().addAll(numarCardLabel,cvvLabel,dataExpLabel,anuntLabel,anuntbLabel,saveB,numarCardTF,cvvTF,dataExpTF);
         layout.setAlignment(Pos.CENTER);
 
-        Scene scene=new Scene(gridLayout,650,250);
+        Scene scene=new Scene(gridLayout,750,350);
 
         window.setScene(scene);
         window.show();
