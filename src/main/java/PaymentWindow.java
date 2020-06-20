@@ -66,10 +66,12 @@ public class PaymentWindow {
                 Integer.parseInt(cvvTF.getText());
                 Integer.parseInt(dataExpTF.getText());
 
-                MainPacient.cereriWindow(scene,window);
+               window.close();
 
             }catch(NumberFormatException exep){
                 alert.show();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         });
 
