@@ -133,7 +133,7 @@ public class MedicBtn extends Button {
                             try {
 
                                 objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("users.json"), SignUp.obj);
-                                FileWriter fil = new FileWriter("Users/" + userTF.getText() + ".json");
+                                FileWriter fil = new FileWriter("target/" + userTF.getText() + ".json");
                                 fil.write(userJsn.toString());
                                 fil.flush();
 

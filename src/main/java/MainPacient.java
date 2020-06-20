@@ -144,7 +144,7 @@ public class MainPacient {
         Main.updateUsers();
         for (JsonUser user: SignUp.obj)
             if (user.getRole().equals("Medic")) {
-                String filename = "Users/" + user.getUsername() + ".json";
+                String filename = "target/" + user.getUsername() + ".json";
                 try {
                     JSONObject jsonObject = MainPacient.parseJSONFile(filename);
                     if((int)jsonObject.get("Activitate") == 1)
@@ -167,7 +167,7 @@ public class MainPacient {
         listView.getItems().clear();
         for (JsonUser user: SignUp.obj)
             if (user.getRole().equals("Medic")) {
-                String filename = "Users/" + user.getUsername() + ".json";
+                String filename = "target/" + user.getUsername() + ".json";
                 ObjectMapper objectMapper = new ObjectMapper();
                 File file = new File(filename);
                 JSONObject jsonObject = parseJSONFile(filename);
@@ -236,8 +236,8 @@ public class MainPacient {
                 listView.refresh();
 
                 //System.out.println(str_cerere[0] + str_cerere[1]);
-                String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
-                String filenameDoctor = "Users/" + str_cerere[0].trim()  + ".json";
+                String filename = "target/" + LogIn.loggedUser.getUsername()  + ".json";
+                String filenameDoctor = "target/" + str_cerere[0].trim()  + ".json";
                 System.out.println(str_cerere[0]);
 
                 JSONObject jsonObject = null;
@@ -309,8 +309,8 @@ public class MainPacient {
                 FileWriter filDoc = null;
                 FileWriter fil = null;
                 try {
-                    fil = new FileWriter("Users/" + LogIn.loggedUser.getUsername() + ".json");
-                    filDoc = new FileWriter("Users/" + str_cerere[0].trim() + ".json");
+                    fil = new FileWriter("target/" + LogIn.loggedUser.getUsername() + ".json");
+                    filDoc = new FileWriter("target/" + str_cerere[0].trim() + ".json");
 
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -350,7 +350,7 @@ public class MainPacient {
         Main.updateUsers();
         for (JsonUser user: SignUp.obj)
             if (user.getUsername().equals(LogIn.loggedUser.getUsername())) {
-                String filename = "Users/" + user.getUsername() + ".json";
+                String filename = "target/" + user.getUsername() + ".json";
                 try {
                     JSONObject jsonObject = MainPacient.parseJSONFile(filename);
                     JSONArray cereri = jsonObject.getJSONArray("Cereri");
@@ -411,8 +411,8 @@ public class MainPacient {
                 String rasp = str_rasp[2];
                 String key = cerereRasp + " -> " + medicRasp;
 
-                String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
-                String filenameDoctor = "Users/" + medicRasp  + ".json";
+                String filename = "target/" + LogIn.loggedUser.getUsername()  + ".json";
+                String filenameDoctor = "target/" + medicRasp  + ".json";
 
 
                 /*listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
@@ -528,8 +528,8 @@ public class MainPacient {
                 FileWriter filDoc = null;
                 FileWriter fil = null;
                 try {
-                    fil = new FileWriter("Users/" + LogIn.loggedUser.getUsername() + ".json");
-                    filDoc = new FileWriter("Users/" + medicRasp.trim() + ".json");
+                    fil = new FileWriter("target/" + LogIn.loggedUser.getUsername() + ".json");
+                    filDoc = new FileWriter("target/" + medicRasp.trim() + ".json");
 
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -583,7 +583,7 @@ public class MainPacient {
         Main.updateUsers();
         for (JsonUser user: SignUp.obj)
             if (user.getUsername().equals(LogIn.loggedUser.getUsername())) {
-                String filename = "Users/" + user.getUsername() + ".json";
+                String filename = "target/" + user.getUsername() + ".json";
                 try {
                     JSONObject jsonObject = MainPacient.parseJSONFile(filename);
                     JSONArray raspunsuri = jsonObject.getJSONArray("Raspunsuri");
@@ -610,7 +610,7 @@ public class MainPacient {
 
 
 
-        String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
+        String filename = "target/" + LogIn.loggedUser.getUsername()  + ".json";
         JSONObject jsonObject;
 
         jsonObject = MainPacient.parseJSONFile(filename);
@@ -647,7 +647,7 @@ public class MainPacient {
 
 
             FileWriter fil;
-            fil = new FileWriter("Users/" + LogIn.loggedUser.getUsername() + ".json");
+            fil = new FileWriter("target/" + LogIn.loggedUser.getUsername() + ".json");
             fil.write(jsonObject.toString());
             fil.flush();
         }
