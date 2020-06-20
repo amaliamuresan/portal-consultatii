@@ -66,4 +66,8 @@
   "username" : "docA",
   "password" : "c4ca4238a0b923820dcc509a6f75849b",
   "role" : "Medic"
+}, {
+  "username" : "medic12",
+  "password" : "c4ca4238a0b923820dcc509a6f75849b",
+  "role" : "Medic"
 } ]

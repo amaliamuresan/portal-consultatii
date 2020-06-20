@@ -104,7 +104,7 @@ public class AdminService {
     }
 
 
-    public static boolean verifyUser(String username, String password) throws NoSuchAlgorithmException, IOException {
+    public static boolean verifyUser(String username, String password) throws NoSuchAlgorithmException,IOException {
 
             for (JsonUser usr : SignUp.obj) {
 
