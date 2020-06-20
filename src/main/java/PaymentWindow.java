@@ -35,7 +35,7 @@ public class PaymentWindow {
         Label cvvLabel = new Label("CVV:");
         Label dataExpLabel = new Label("Data Expirarii:");
         Label anuntLabel = new Label("Aveti de achitat contravaloarea serviciilor.");
-        Label anuntbLabel = new Label("Redirectionarea catre pagina principala reprezinta efectuarea cu succes a platii");
+        Label anuntbLabel = new Label("Inchiderea ferestrei reprezinta efectuarea cu succes a platii");
         TextField numarCardTF = new TextField();
         TextField cvvTF = new TextField();
         TextField dataExpTF = new TextField();
