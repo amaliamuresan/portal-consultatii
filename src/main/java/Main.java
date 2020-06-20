@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.apache.commons.io.FileUtils;
 
 
 import java.io.File;
@@ -26,6 +27,17 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        try {
+            File original = new File("../users.json");
+            File copied = new File("users.json");
+            FileUtils.copyFile(original, copied);
+            original = new File("../parafe.json");
+            copied = new File("parafe.json");
+            FileUtils.copyFile(original, copied);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         Main.updateUsers();
 
         window = primaryStage;
