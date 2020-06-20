@@ -66,4 +66,24 @@
   "username" : "docA",
   "password" : "c4ca4238a0b923820dcc509a6f75849b",
   "role" : "Medic"
+}, {
+  "username" : "oa",
+  "password" : "c12e01f2a13ff5587e1e9e4aedb8242d",
+  "role" : "Pacient"
+}, {
+  "username" : "paci",
+  "password" : "dbb890d45522f47cbe43bbb624e627a7",
+  "role" : "Pacient"
+}, {
+  "username" : "Memedic",
+  "password" : "c4ca4238a0b923820dcc509a6f75849b",
+  "role" : "Medic"
+}, {
+  "username" : "eminem",
+  "password" : "c4ca4238a0b923820dcc509a6f75849b",
+  "role" : "Medic"
+}, {
+  "username" : "eminem1",
+  "password" : "47e2e8c3fdb7739e740b95345a803cac",
+  "role" : "Medic"
 } ]

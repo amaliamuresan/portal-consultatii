@@ -32,7 +32,7 @@ public class MedicBtn extends Button {
     public void writeUserDataMedic(TextField userTF, TextField passwordTF) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("users.json");
+        File file = new File("src/main/resources/users.json");
         SignUp.obj = objectMapper.readValue(file, new TypeReference<List<JsonUser>>() {});
 
         String Val = this.getText();
@@ -132,8 +132,8 @@ public class MedicBtn extends Button {
 
                             try {
 
-                                objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("users.json"), SignUp.obj);
-                                FileWriter fil = new FileWriter("target/" + userTF.getText() + ".json");
+                                objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/resources/users.json"), SignUp.obj);
+                                FileWriter fil = new FileWriter("src/main/resources/Users/" + userTF.getText() + ".json");
                                 fil.write(userJsn.toString());
                                 fil.flush();
 
