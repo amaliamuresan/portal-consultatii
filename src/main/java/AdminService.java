@@ -99,7 +99,7 @@ public class AdminService {
                 System.out.println(p.toString());
             }
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(new File("parafe.json"), Parafa.listaCoduri);
+            objectMapper.writeValue(new File("src/main/resources/parafe.json"), Parafa.listaCoduri);
         }
     }
 

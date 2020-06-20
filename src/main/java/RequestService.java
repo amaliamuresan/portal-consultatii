@@ -77,7 +77,7 @@ public class RequestService {
     }
 
     private static void trimiteCerere(String key,JsonUser user,String txt) throws IOException{
-        String filename = "target/" + user.getUsername() + ".json";
+        String filename = "src/main/resources/Users/" + user.getUsername() + ".json";
         JSONObject jsonObject= MainPacient.parseJSONFile(filename);
         JSONObject cere= new JSONObject();
         cere.put(key,txt);
