@@ -438,7 +438,7 @@ public class MainPacient {
                     return;
 
                 if(jsonObjectDoctor.get("tip_serviciu").equals("privat")){
-                    PaymentWindow.startPayment(window);
+                    PaymentWindow.startPayment(new Stage());
                 }
                 //System.out.println(cereri.getJSONObject(nr_cerere).toString() + "pacient");
                 //cereri.getJSONObject(nr_cerere).remove(str_cerere[0]);
@@ -477,7 +477,7 @@ public class MainPacient {
                         System.out.println(cereriDoctor.getJSONObject(i).toString() + "1");
                         //System.out.println(cereri.getJSONObject(nr_cerere).get(str_cerere[0]) + "2");
                         //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername() + " --" + cereri.get(nr_cerere)));
-                        if(((cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()).equals(cerereRasp))))
+                        if((cereriDoctor.getJSONObject(i).has(LogIn.loggedUser.getUsername()) && (cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()).equals(cerereRasp))))
                         {
                             System.out.println(cereriDoctor.getJSONObject(i).toString() + "doctor");
                             //cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
