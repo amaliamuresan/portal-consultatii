@@ -381,22 +381,22 @@ public class MainPacient {
 
         Button mainpgBtn =new Button("Pagina Principala");
         Label raspunsLabel = new Label("Raspunsuri");
-        Button stergeRaspBtn = new Button("Sterge raspuns");
+        Button confirmaRaspBtn = new Button("Confirma raspuns");
         ListView lvRasp = new ListView();
         MainPacient.addRasp(lvRasp);
 
-        stergeRaspBtn.setPrefWidth(130);
+        confirmaRaspBtn.setPrefWidth(130);
         mainpgBtn.setPrefWidth(130);
 
 
-        vb.getChildren().addAll(raspunsLabel,lvRasp, stergeRaspBtn, mainpgBtn);
+        vb.getChildren().addAll(raspunsLabel,lvRasp, confirmaRaspBtn, mainpgBtn);
         vb.setPadding(new Insets(10, 10, 10, 10));
         vb.setAlignment(Pos.CENTER);
         mainpgBtn.setOnAction(e -> window.setScene(sceneMain));
 
         int nr_cerere = listView.getSelectionModel().getSelectedIndex();
 
-        stergeRaspBtn.setOnAction(e ->
+        confirmaRaspBtn.setOnAction(e ->
         {
             if(lvRasp.getSelectionModel().isEmpty() == true)
             {
@@ -413,6 +413,7 @@ public class MainPacient {
 
                 String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
                 String filenameDoctor = "Users/" + medicRasp  + ".json";
+
 
                 /*listView.getItems().remove(listView.getSelectionModel().getSelectedItem());
                 gridLayout.getChildren().remove(listView);
@@ -435,6 +436,10 @@ public class MainPacient {
                 JSONArray cereriDoctor = jsonObjectDoctor.getJSONArray("Cereri");
                 if(cereri == null || cereriDoctor == null)
                     return;
+
+                if(jsonObjectDoctor.get("tip_serviciu").equals("privat")){
+                    PaymentWindow.startPayment(window);
+                }
                 //System.out.println(cereri.getJSONObject(nr_cerere).toString() + "pacient");
                 //cereri.getJSONObject(nr_cerere).remove(str_cerere[0]);
                 //cereri.remove(nr_cerere);
