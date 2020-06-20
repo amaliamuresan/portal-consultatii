@@ -1,14 +1,11 @@
-import Medic.MedicMainPage;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -20,6 +17,8 @@ public class LogIn {
 
     static Button logIn;
     static Alert alert;
+
+    public static JsonUser loggedUser;
     /*public static void main(String[] args) {
 
         launch(args);
@@ -47,7 +46,7 @@ public class LogIn {
         Label usernameLabel = new Label("Username");
         Label passwordLabel = new Label("Password");
         TextField usernameTF = new TextField();
-        TextField passwordTF = new TextField();
+        PasswordField passwordTF = new PasswordField();
         usernameTF.setPromptText("Enter your username");
         passwordTF.setPromptText("Enter your password");
 
@@ -73,25 +72,16 @@ public class LogIn {
                             alert.show();
                         else {
                             try {
-
-                                if(AdminService.returnRole(usernameTF.getText()).equals("Medic"))
-                                {
-                                    MedicMainPage.Init(window);
-                                }
-                                else
-                                {
                                     if(AdminService.returnRole(usernameTF.getText()).equals("Medic"))
                                     {
+                                        loggedUser=new JsonUser(usernameTF.getText(),passwordTF.getText(),"Medic");
                                         MedicMainPage.Init(Main.window);
                                     }
                                     else
                                         {
+                                            loggedUser=new JsonUser(usernameTF.getText(),passwordTF.getText(),"Pacient");
                                             MainPacient.init(Main.window);
-
                                     }
-                                }
-
-
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }

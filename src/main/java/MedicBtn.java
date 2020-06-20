@@ -1,4 +1,4 @@
-import Medic.MedicMainPage;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.Node;
@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -111,7 +112,11 @@ public class MedicBtn extends Button {
                                 userJsn.put("preturi", priceJson);
 
                             }
-
+                            ArrayList<JSONObject> cereri=new ArrayList<>();
+                            userJsn.put("Cereri",cereri);
+                            userJsn.put("Activitate", 1);
+                            ArrayList<String> pacienti=new ArrayList<>();
+                            userJsn.put("Pacienti",pacienti);
                             ok = 1;
 
                             //MedicMainPage.Init(SignUp.window);
@@ -136,16 +141,20 @@ public class MedicBtn extends Button {
                                 err.printStackTrace();
                             }
 
-                            //MedicMainPage.Init(Main.window);
                         }
 
-                            //MedicMainPage.Init(Main.window);
+
                         }
                     }
 
                 if(ok == 1)
                 {
-                    MedicMainPage.Init(Main.window);
+                    LogIn.loggedUser=new JsonUser(userTF.getText(),passwordTF.getText(),"Medic");
+                    try {
+                        MedicMainPage.Init(Main.window);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
             }
 

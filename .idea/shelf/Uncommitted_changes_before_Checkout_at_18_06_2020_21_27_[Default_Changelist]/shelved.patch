@@ -1,0 +1,26 @@
+Index: src/main/java/SignUp.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import com.fasterxml.jackson.core.JsonProcessingException;\r\nimport javafx.application.Application;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.event.EventHandler;\r\nimport javafx.geometry.Pos;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.layout.GridPane;\r\nimport javafx.scene.layout.HBox;\r\nimport javafx.scene.layout.VBox;\r\nimport javafx.stage.Stage;\r\nimport javafx.application.Application;\r\nimport javafx.scene.layout.StackPane;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.geometry.Insets;\r\n\r\nimport java.io.IOException;\r\nimport java.util.List;\r\n\r\n\r\npublic class SignUp {\r\n\r\n    public static List<JsonUser> obj;\r\n\r\n    //public static void main(String[] args) {\r\n       // launch(args);\r\n   // }\r\n\r\n    public static Stage window;\r\n    //LoadUsers l = new LoadUsers();\r\n\r\n\r\n    //@Override\r\n    public static void initSignUp() throws IOException {\r\n\r\n\r\n        //window = primaryStage;\r\n        window.setTitle(\"Sign Up\");\r\n        PatientBtn pacientBtn = new PatientBtn(\"Pacient\");\r\n        MedicBtn medicBtn = new MedicBtn(\"Medic\");\r\n        Label roleLabel = new Label(\"Pick a role:\");\r\n        HBox rolesHBox = new HBox();\r\n        rolesHBox.setSpacing(5);\r\n\r\n\r\n        GridPane gridLayout = new GridPane();\r\n        gridLayout.setPadding(new Insets(15, 15, 15, 15));\r\n        gridLayout.setVgap(7);\r\n        gridLayout.setHgap(1);\r\n        gridLayout.setAlignment(Pos.BASELINE_CENTER);\r\n\r\n        Label usernameLabel = new Label(\"Username\");\r\n        Label passwordLabel = new Label(\"Password\");\r\n\r\n        TextField usernameTF = new TextField();\r\n        TextField passwordTF = new TextField();\r\n\r\n        usernameTF.setPromptText(\"Create an username\");\r\n        passwordTF.setPromptText(\"Create a password\");\r\n\r\n        gridLayout.setConstraints(usernameLabel, 0, 1 );\r\n        gridLayout.setConstraints(passwordLabel, 0, 2);\r\n        gridLayout.setConstraints(usernameTF, 1 , 1);\r\n        gridLayout.setConstraints(passwordTF, 1, 2 );\r\n        gridLayout.setConstraints(roleLabel, 1, 3);\r\n        gridLayout.setConstraints(rolesHBox, 1, 4);\r\n\r\n        rolesHBox.getChildren().addAll(medicBtn, pacientBtn);\r\n\r\n        //AdminService.writeDataInJsonFile();\r\n        Parafa.setCoduri();\r\n\r\n\r\n        pacientBtn.writeUserDataPatient(usernameTF, passwordTF);\r\n        medicBtn.writeUserDataMedic(usernameTF, passwordTF);\r\n\r\n        gridLayout.getChildren().addAll(usernameLabel, usernameTF, passwordTF, passwordLabel,  roleLabel, rolesHBox);\r\n\r\n        Scene sceneSignUp = new Scene(gridLayout, 350, 250);\r\n        window.setScene(sceneSignUp);\r\n        //System.out.println(SignUp.obj);\r\n\r\n        window.show();\r\n\r\n\r\n\r\n    }\r\n\r\n    public static void setStage(Stage stage)\r\n    {\r\n        window = stage;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/SignUp.java	(revision cedffff636f9570622fd2feb80eb95d99e88bc76)
++++ src/main/java/SignUp.java	(date 1592504769806)
+@@ -28,7 +28,7 @@
+    // }
+ 
+     public static Stage window;
+-    //LoadUsers l = new LoadUsers();
++    
+ 
+ 
+     //@Override
+@@ -79,7 +79,6 @@
+ 
+         Scene sceneSignUp = new Scene(gridLayout, 350, 250);
+         window.setScene(sceneSignUp);
+-        //System.out.println(SignUp.obj);
+ 
+         window.show();
+ 

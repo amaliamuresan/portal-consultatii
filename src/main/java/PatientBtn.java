@@ -1,4 +1,4 @@
-import Medic.MedicMainPage;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Alert;
@@ -23,13 +23,10 @@ public class PatientBtn extends Button{
     static String adress;
     static int valid = 0;
 
-
-
     public PatientBtn(String value)
     {
         super(value);
     }
-
 
     public void writeUserDataPatient(TextField userTF, TextField passwordTF) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -65,7 +62,7 @@ public class PatientBtn extends Button{
 
                 } else {
                     valid = 1;
-                    PatientPromptedWindow.window();
+                    PatientPromptedWindow.window(userTF, passwordTF);
 
                     userJson.setUsername(userTF.getText());
 
@@ -86,6 +83,10 @@ public class PatientBtn extends Button{
                     try {
                         JSONObject JsnObj = new JSONObject();
                         JsnObj.put("adresa", adress);
+                        ArrayList<JSONObject> cereri=new ArrayList<>();
+                        JsnObj.put("Cereri",cereri);
+                        ArrayList<JSONObject> raspunsuri =new ArrayList<>();
+                        JsnObj.put("Raspunsuri",raspunsuri);
                         FileWriter fil  = new FileWriter("Users/" + userTF.getText() + ".json");
                         fil.write(JsnObj.toString());
                         fil.flush();
@@ -100,7 +101,7 @@ public class PatientBtn extends Button{
     }
 
 
-    public void  getPatientData(TextField adresaTF, Stage window)
+    public void  getPatientData(TextField adresaTF, Stage window,TextField userTF, TextField passwordTF)
     {
 
         this.setOnAction(e -> {
@@ -119,6 +120,7 @@ public class PatientBtn extends Button{
 
                 if (valid == 1) {
                     try {
+                        LogIn.loggedUser=new JsonUser(userTF.getText(),passwordTF.getText(),"Pacient");
                         MainPacient.init(window);
                         SignUp.window.close();
 
