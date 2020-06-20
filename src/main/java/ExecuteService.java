@@ -51,7 +51,7 @@ public class ExecuteService {
             else
             {
                 try {
-                    ExecuteService.trimiteRaspuns(textArea, MedicMainPage.numePacient, MedicMainPage.cererePacient);
+                    ExecuteService.trimiteRaspuns(textArea, MedicMainPage.numePacient, MedicMainPage.cererePacient,interneazaCB);
                 } catch (IOException ioException) {
                 ioException.printStackTrace();
                 }
@@ -69,11 +69,22 @@ public class ExecuteService {
 
     }
 
-    public static void trimiteRaspuns(TextArea textArea, String namePatient, String cerere) throws IOException {
+    public static void trimiteRaspuns(TextArea textArea, String namePatient, String cerere,CheckBox checkBox) throws IOException {
         String filename = "Users/" + namePatient + ".json";
         JSONObject jsonObject= MainPacient.parseJSONFile(filename);
         JSONObject rasp= new JSONObject();
-        rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText());
+        if(checkBox.isSelected()){
+            String filedoc = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+            JSONObject jsonDoc= MainPacient.parseJSONFile(filedoc);
+            if(jsonDoc.get("tip_serviciu").toString().equals("privat"))
+                rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText()+ " ATENTIE aveti nevoie de internare, " +
+                        "va rugam sa va prezentati la adresa clinicii:" + jsonDoc.getString("adresa Clinica"));
+            else
+                rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText()+ "ATENTIE aveti nevoie de internare, " +
+                    "va rugam sa va prezentati la adresa spitalului:" + jsonDoc.getString("adresa Spital"));
+        }
+        else
+            rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText());
         JSONArray raspunsuri = jsonObject.getJSONArray("Raspunsuri");
         raspunsuri.put(rasp);
         FileWriter file = new FileWriter(filename);
