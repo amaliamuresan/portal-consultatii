@@ -69,7 +69,7 @@ public class MedicMainPage{
 
 
 
-        String filename = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+        String filename = "target/" + LogIn.loggedUser.getUsername() + ".json";
         try {
             JSONObject jsonObject = MainPacient.parseJSONFile(filename);
             if((int)jsonObject.get("Activitate") == 1) {
@@ -121,7 +121,7 @@ public class MedicMainPage{
 
 
         gridLayout.setHgap(10);
-        String filenameType = "users/" + LogIn.loggedUser.getUsername() + ".json";
+        String filenameType = "target/" + LogIn.loggedUser.getUsername() + ".json";
         JSONObject jsonObjectType = MainPacient.parseJSONFile(filenameType);
         if(jsonObjectType.get("tip_serviciu").toString().equals("privat"))
         {
@@ -145,7 +145,7 @@ public class MedicMainPage{
 
         suspendActivityB.setOnAction(e-> {
 
-            String fname = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+            String fname = "target/" + LogIn.loggedUser.getUsername() + ".json";
              try {
                  JSONObject jsonObject = MainPacient.parseJSONFile(fname);
                  if(suspendActivityB.getText().equals("Suspenda Activitatea")){

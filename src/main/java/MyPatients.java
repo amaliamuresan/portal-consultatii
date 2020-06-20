@@ -60,7 +60,7 @@ public class MyPatients {
     }
 
     private static void updatePatientsList(ListView<String> listView){
-        String filename = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+        String filename = "target/" + LogIn.loggedUser.getUsername() + ".json";
         try {
             JSONObject jsonObject= MainPacient.parseJSONFile(filename);
             JSONArray pacienti=jsonObject.getJSONArray("Pacienti");
@@ -72,7 +72,7 @@ public class MyPatients {
     }
 
     private static void externeazaPacient(ListView<String> listView){
-        String filename = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+        String filename = "target/" + LogIn.loggedUser.getUsername() + ".json";
         try {
             JSONObject jsonObject= MainPacient.parseJSONFile(filename);
             JSONArray pacienti=jsonObject.getJSONArray("Pacienti");

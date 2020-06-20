@@ -37,7 +37,7 @@ public class UpdatePrice {
         TextField consultTF = new TextField();
         TextField interpretTF = new TextField();
 
-        String filename = "Users/" + LogIn.loggedUser.getUsername() + ".json";
+        String filename = "target/" + LogIn.loggedUser.getUsername() + ".json";
         try {
             JSONObject jsonObject = MainPacient.parseJSONFile(filename);
             JSONObject preturi = jsonObject.getJSONObject("preturi");
