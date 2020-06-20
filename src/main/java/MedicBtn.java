@@ -115,6 +115,8 @@ public class MedicBtn extends Button {
                             ArrayList<JSONObject> cereri=new ArrayList<>();
                             userJsn.put("Cereri",cereri);
                             userJsn.put("Activitate", 1);
+                            ArrayList<String> pacienti=new ArrayList<>();
+                            userJsn.put("Pacienti",pacienti);
                             ok = 1;
 
                             //MedicMainPage.Init(SignUp.window);

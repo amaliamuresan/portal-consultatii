@@ -80,8 +80,13 @@ public class ExecuteService {
                 rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText()+ " ATENTIE aveti nevoie de internare, " +
                         "va rugam sa va prezentati la adresa clinicii:" + jsonDoc.getString("adresa Clinica"));
             else
-                rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText()+ "ATENTIE aveti nevoie de internare, " +
+                rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText()+ " ATENTIE aveti nevoie de internare, " +
                     "va rugam sa va prezentati la adresa spitalului:" + jsonDoc.getString("adresa Spital"));
+            JSONArray pacienti=jsonDoc.getJSONArray("Pacienti");
+            pacienti.put(namePatient);
+            FileWriter fileDoctor = new FileWriter(filedoc);
+            fileDoctor.write(jsonDoc.toString());
+            fileDoctor.flush();
         }
         else
             rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText());
