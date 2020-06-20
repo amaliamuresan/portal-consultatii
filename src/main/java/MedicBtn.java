@@ -139,17 +139,20 @@ public class MedicBtn extends Button {
                                 err.printStackTrace();
                             }
 
-                            //MedicMainPage.Init(Main.window);
                         }
 
-                            //MedicMainPage.Init(Main.window);
+
                         }
                     }
 
                 if(ok == 1)
                 {
                     LogIn.loggedUser=new JsonUser(userTF.getText(),passwordTF.getText(),"Medic");
-                    MedicMainPage.Init(Main.window);
+                    try {
+                        MedicMainPage.Init(Main.window);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
             }
 

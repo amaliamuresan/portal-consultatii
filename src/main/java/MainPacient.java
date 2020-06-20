@@ -12,6 +12,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import jdk.nashorn.internal.parser.JSONParser;
@@ -53,7 +55,6 @@ public class MainPacient {
         filtreazaBtn = new Button("Filtreaza");
         Button okBtn = new Button("OK");
         TextField specialtyTF = new TextField();
-        raspunsuriBtn = new Button("Raspunsuri");
 
         specialtyTF.setPromptText("Alegeti specializarea");
 
@@ -97,6 +98,7 @@ public class MainPacient {
         window.show();
         //MainPacient.filterMedici("s2");
 
+        raspunsuriBtn.setOnAction((e->window.setScene(MainPacient.cereriWindow(sceneMain,window))));
         mainpg.setOnAction(e->window.setScene(sceneMain));
         cereri.setOnAction((e->window.setScene(MainPacient.makeScenaCereri(sceneMain,window))));
         solicita.setOnAction(e->{
@@ -109,6 +111,8 @@ public class MainPacient {
                 RequestService.promptChoice();
             }
         });
+
+
 
         filtreazaBtn.setOnAction( e -> {
             HBox hb = new HBox(10);
@@ -154,6 +158,12 @@ public class MainPacient {
 
     private static void filterMedici(String spec) throws IOException {
         //ListView<String> filtredList = new ListView<>();
+        if(spec.equals("") || spec == null)
+        {
+            listView.getItems().clear();
+            MainPacient.addNumeMedici(listView);
+            return;
+        }
         listView.getItems().clear();
         for (JsonUser user: SignUp.obj)
             if (user.getRole().equals("Medic")) {
@@ -167,13 +177,6 @@ public class MainPacient {
 
 
             }
-
-        //listView = filtredList;
-           // listView.refresh();
-        //listView.getItems().clear();
-
-        //gridLayout.setConstraints(filtredList,1,1);
-
 
 
 
@@ -223,9 +226,6 @@ public class MainPacient {
             }
             else {
 
-                ListView listCopy = new ListView();
-
-
                     int nr_cerere = listView.getSelectionModel().getSelectedIndex();
 
 
@@ -264,7 +264,6 @@ public class MainPacient {
                     //System.out.println(cereriDoctor.getJSONObject(i).names().getString(0));
                     if((cereriDoctor.getJSONObject(i).names().getString(0)).equals(LogIn.loggedUser.getUsername()));
                     {
-                        //System.out.println(LogIn.loggedUser.getUsername() +  "2");
 
                         System.out.println(cereriDoctor.getJSONObject(i).toString() + "doctor");
                         //cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
@@ -363,6 +362,63 @@ public class MainPacient {
                     exception.printStackTrace();
                 }
             }
+    }
+
+    public static Scene cereriWindow(Scene sceneMain, Stage window)
+    {
+        //Stage window = new Stage();
+        //window.initModality(Modality.APPLICATION_MODAL);
+
+        VBox vb = new VBox(15);
+
+        Button mainpgBtn =new Button("Pagina Principala");
+        Label raspunsLabel = new Label("Raspunsuri");
+        Button stergeRaspBtn = new Button("Sterge raspuns");
+        ListView lvRasp = new ListView();
+        MainPacient.addRasp(lvRasp);
+
+        stergeRaspBtn.setPrefWidth(130);
+        mainpgBtn.setPrefWidth(130);
+
+
+        vb.getChildren().addAll(raspunsLabel,lvRasp, stergeRaspBtn, mainpgBtn);
+        vb.setPadding(new Insets(10, 10, 10, 10));
+        vb.setAlignment(Pos.CENTER);
+        mainpgBtn.setOnAction(e -> window.setScene(sceneMain));
+
+        Scene scenaCereri = new Scene(vb, 500, 350);
+        window.setScene(sceneMain);
+        //window.show();
+
+        return scenaCereri;
+    }
+
+    public static void addRasp(ListView<String> lv)
+    {
+        Main.updateUsers();
+        for (JsonUser user: SignUp.obj)
+            if (user.getUsername().equals(LogIn.loggedUser.getUsername())) {
+                String filename = "Users/" + user.getUsername() + ".json";
+                try {
+                    JSONObject jsonObject = MainPacient.parseJSONFile(filename);
+                    JSONArray raspunsuri = jsonObject.getJSONArray("Raspunsuri");
+                    for(int i=0;i<raspunsuri.length();i++) {
+                        String string=raspunsuri.getJSONObject(i).toString(),rasp=new String("");
+                        for(int j=0;j<string.length();j++){
+                            char c=string.charAt(j);
+                            if(c==':')
+                                rasp+=" -> ";
+                            else
+                            if(c != '{' && c!='}' && c!='"')
+                                rasp+=c;
+                        }
+                        lv.getItems().add(rasp);
+                    }
+                }catch (IOException exception){
+                    exception.printStackTrace();
+                }
+            }
+
     }
 
 }
