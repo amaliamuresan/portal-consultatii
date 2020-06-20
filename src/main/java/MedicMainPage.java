@@ -32,7 +32,7 @@ public class MedicMainPage{
 
 
         Label requestLabel = new Label("Lista cereri:");
-        Button myPatientsBtn = new Button("Pacienti internati");
+        Button myPatientsBtn = new Button("Pacienti\ninternati");
         Button updatePriceBtn = new Button("Actualizeaza preturi");
         Button suspendActivityB = new Button();
         Button raspundeBtn = new Button("Raspunde");
@@ -45,6 +45,7 @@ public class MedicMainPage{
 
         updatePriceBtn.setPrefWidth(130);
         myPatientsBtn.setPrefWidth(130);
+        myPatientsBtn.setMinHeight(50);
 
         GridPane gridLayout = new GridPane();
         gridLayout.setPadding(new Insets(15, 15, 15, 15));
