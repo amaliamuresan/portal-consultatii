@@ -620,7 +620,7 @@ public class MainPacient {
             return;
         for(int i = 0; i < raspunsuri.length(); i++)
         {
-            if(raspunsuri.getJSONObject(i).has(key) && raspunsuri.getJSONObject(i).get(key).toString().equals(val))
+            if(raspunsuri.getJSONObject(i).has(key))
             {
                 if(raspunsuri.length() == 1)
                 {
