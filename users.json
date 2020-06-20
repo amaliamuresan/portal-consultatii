@@ -46,4 +46,12 @@
   "username" : "mp",
   "password" : "1f2dfa567dcf95833eddf7aec167fec7",
   "role" : "Medic"
+}, {
+  "username" : "doc",
+  "password" : "9a09b4dfda82e3e665e31092d1c3ec8d",
+  "role" : "Medic"
+}, {
+  "username" : "pac",
+  "password" : "182a15b93cd323556be21fd4fe8f3a8a",
+  "role" : "Pacient"
 } ]

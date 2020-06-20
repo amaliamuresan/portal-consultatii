@@ -51,7 +51,7 @@ public class ExecuteService {
             else
             {
                 try {
-                    ExecuteService.trimiteRaspuns(textArea, MedicMainPage.numePacient);
+                    ExecuteService.trimiteRaspuns(textArea, MedicMainPage.numePacient, MedicMainPage.cererePacient);
                 } catch (IOException ioException) {
                 ioException.printStackTrace();
                 }
@@ -69,11 +69,11 @@ public class ExecuteService {
 
     }
 
-    public static void trimiteRaspuns(TextArea textArea, String namePatient) throws IOException {
+    public static void trimiteRaspuns(TextArea textArea, String namePatient, String cerere) throws IOException {
         String filename = "Users/" + namePatient + ".json";
         JSONObject jsonObject= MainPacient.parseJSONFile(filename);
         JSONObject rasp= new JSONObject();
-        rasp.put(LogIn.loggedUser.getUsername(),textArea.getText());
+        rasp.put(cerere + " -> "  + LogIn.loggedUser.getUsername(),textArea.getText());
         JSONArray raspunsuri = jsonObject.getJSONArray("Raspunsuri");
         raspunsuri.put(rasp);
         FileWriter file = new FileWriter(filename);

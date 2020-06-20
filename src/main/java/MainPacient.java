@@ -260,14 +260,19 @@ public class MainPacient {
                 {
                     //System.out.println(LogIn.loggedUser.getUsername() + "1");
                     //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()) + "  -- " + cereri.getJSONObject(nr_cerere).get(str_cerere[0]));
-                    //cereriDoctor.getJSONObject(i).keys();
+
                     //System.out.println(cereriDoctor.getJSONObject(i).names().getString(0));
                     if((cereriDoctor.getJSONObject(i).names().getString(0)).equals(LogIn.loggedUser.getUsername()));
                     {
-
-                        System.out.println(cereriDoctor.getJSONObject(i).toString() + "doctor");
-                        //cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
-                        cereriDoctor.remove(i);
+                        System.out.println(cereriDoctor.getJSONObject(i).toString() + "1");
+                        System.out.println(cereri.getJSONObject(nr_cerere).get(str_cerere[0]) + "2");
+                        //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername() + " --" + cereri.get(nr_cerere)));
+                        if(((cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()).equals(cereri.getJSONObject(nr_cerere).get(str_cerere[0])))))
+                        {
+                            System.out.println(cereriDoctor.getJSONObject(i).toString() + "doctor");
+                            //cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
+                            cereriDoctor.remove(i);
+                        }
 
                     }
                 }
@@ -386,6 +391,152 @@ public class MainPacient {
         vb.setAlignment(Pos.CENTER);
         mainpgBtn.setOnAction(e -> window.setScene(sceneMain));
 
+        int nr_cerere = listView.getSelectionModel().getSelectedIndex();
+
+        stergeRaspBtn.setOnAction(e ->
+        {
+            if(lvRasp.getSelectionModel().isEmpty() == true)
+            {
+                Label label = new Label("Selectati un raspuns pentru a fi sters!");
+                vb.getChildren().add(label);
+            }
+            else
+            {
+                String str_rasp[] = lvRasp.getSelectionModel().getSelectedItem().toString().split(" -> ");
+                String cerereRasp = str_rasp[0];
+                String medicRasp = str_rasp[1];
+                String rasp = str_rasp[2];
+
+                String filename = "Users/" + LogIn.loggedUser.getUsername()  + ".json";
+                String filenameDoctor = "Users/" + medicRasp  + ".json";
+
+
+                JSONObject jsonObject = null;
+                JSONObject jsonObjectDoctor = null;
+                try {
+                    jsonObject = MainPacient.parseJSONFile(filename);
+                    jsonObjectDoctor = MainPacient.parseJSONFile(filenameDoctor);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                JSONArray cereri = jsonObject.getJSONArray("Cereri");
+                JSONArray cereriDoctor = jsonObjectDoctor.getJSONArray("Cereri");
+                if(cereri == null ||cereriDoctor == null)
+                    return;
+                //System.out.println(cereri.getJSONObject(nr_cerere).toString() + "pacient");
+                //cereri.getJSONObject(nr_cerere).remove(str_cerere[0]);
+                //cereri.remove(nr_cerere);
+
+                for(int i = 0; i < cereri.length(); i++)
+                {
+
+                    System.out.println(cereri.getJSONObject(i).get(medicRasp).toString() + " - " + cerereRasp +  " rasp");
+                    if(cereri.getJSONObject(i).get(medicRasp).toString().equals(cerereRasp))
+                    {
+                        System.out.println(cereri.getJSONObject(i).get(medicRasp).toString() + " pat");
+
+                        if(cereriDoctor.length() == 1)
+                        {
+                            JSONArray ar = new JSONArray();
+                            jsonObject.put("Cereri", ar);
+                        }
+                        else {
+                            cereri.remove(i);
+                        }
+
+                    }
+                }
+
+
+
+                for(int i = 0; i < cereriDoctor.length(); i++)
+                {
+                    //System.out.println(LogIn.loggedUser.getUsername() + "1");
+                    //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()) + "  -- " + cereri.getJSONObject(nr_cerere).get(str_cerere[0]));
+
+                    //System.out.println(cereriDoctor.getJSONObject(i).names().getString(0));
+                    if((cereriDoctor.getJSONObject(i).names().getString(0)).equals(LogIn.loggedUser.getUsername()));
+                    {
+                        System.out.println(cereriDoctor.getJSONObject(i).toString() + "1");
+                        //System.out.println(cereri.getJSONObject(nr_cerere).get(str_cerere[0]) + "2");
+                        //System.out.println(cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername() + " --" + cereri.get(nr_cerere)));
+                        if(((cereriDoctor.getJSONObject(i).get(LogIn.loggedUser.getUsername()).equals(cerereRasp))))
+                        {
+                            System.out.println(cereriDoctor.getJSONObject(i).toString() + "doctor");
+                            //cereriDoctor.getJSONObject(i).remove(LogIn.loggedUser.getUsername());
+                            if(cereriDoctor.length() == 1)
+                            {
+                                JSONArray ar = new JSONArray();
+                                jsonObjectDoctor.put("Cereri", ar);
+                            }
+                            else {
+
+                                cereriDoctor.remove(i);
+
+                            }
+                        }
+
+                    }
+                }
+
+
+
+
+
+
+
+                //jsonObject.get("Cereri");
+                jsonObjectDoctor.remove("Cereri");
+                jsonObject.remove("Cereri");
+                if(cereri.length() > 0)
+                {
+                    jsonObject.put("Cereri", cereri);
+                }
+                else
+                {
+                    JSONArray ar = new JSONArray();
+                    jsonObject.put("Cereri", ar);
+                }
+
+                if(cereriDoctor.length() > 0)
+                {
+                    jsonObjectDoctor.put("Cereri", cereriDoctor);
+                }
+                else
+                {
+                    JSONArray ar = new JSONArray();
+                    jsonObjectDoctor.put("Cereri", ar);
+                }
+
+                FileWriter filDoc = null;
+                FileWriter fil = null;
+                try {
+                    fil = new FileWriter("Users/" + LogIn.loggedUser.getUsername() + ".json");
+                    filDoc = new FileWriter("Users/" + medicRasp.trim() + ".json");
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    fil.write(jsonObject.toString());
+                    filDoc.write(jsonObjectDoctor.toString());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                try {
+                    fil.flush();
+                    filDoc.flush();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+
+
+            }
+
+
+        });
+
         Scene scenaCereri = new Scene(vb, 500, 350);
         window.setScene(sceneMain);
         //window.show();
@@ -420,5 +571,7 @@ public class MainPacient {
             }
 
     }
+
+
 
 }

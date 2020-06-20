@@ -23,6 +23,7 @@ public class MedicMainPage{
 
     public static Stage window;
     public static String numePacient;
+    public static String cererePacient;
 
 
     //@Override
@@ -93,6 +94,8 @@ public class MedicMainPage{
             {
                 String nume_str[]  = lvCereri.getSelectionModel().getSelectedItem().toString().split(" -> ");
                 numePacient = nume_str[0];
+                cererePacient = nume_str[1];
+
                 try {
                     ExecuteService.init();
                 } catch (IOException ioException) {
