@@ -84,7 +84,7 @@ public class MedicMainPage{
 
         ExecuteService.addCereriLista(lvCereri);
 
-
+        myPatientsBtn.setOnAction(e->MyPatients.myPatientsScene(window));
         raspundeBtn.setOnAction(e -> {
             if(lvCereri.getSelectionModel().isEmpty())
             {
