@@ -87,7 +87,7 @@ public class PatientBtn extends Button{
                         JsnObj.put("Cereri",cereri);
                         ArrayList<JSONObject> raspunsuri =new ArrayList<>();
                         JsnObj.put("Raspunsuri",raspunsuri);
-                        FileWriter fil  = new FileWriter("Users/" + userTF.getText() + ".json");
+                        FileWriter fil  = new FileWriter("target/" + userTF.getText() + ".json");
                         fil.write(JsnObj.toString());
                         fil.flush();
 
